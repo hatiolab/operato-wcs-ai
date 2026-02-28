@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  wcs-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: operato-wcs-backend
+    image: operato-wcs-ai:latest
+    ports:
+      - "8080:8080"
+    environment:
+      # Spring Boot configuration
+      - SPRING_PROFILES_ACTIVE=prod
+      # Database connection (adjust as needed)
+      # - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/wcs
+      # - SPRING_DATASOURCE_USERNAME=wcs_user
+      # - SPRING_DATASOURCE_PASSWORD=your_password
+      # Redis connection (adjust as needed)
+      # - SPRING_REDIS_HOST=redis
+      # - SPRING_REDIS_PORT=6379
+      # RabbitMQ connection (adjust as needed)
+      # - SPRING_RABBITMQ_HOST=rabbitmq
+      # - SPRING_RABBITMQ_PORT=5672
+      # - SPRING_RABBITMQ_USERNAME=guest
+      # - SPRING_RABBITMQ_PASSWORD=guest
+      # JVM options
+      - JAVA_OPTS=-Xmx1g -Xms512m
+    volumes:
+      # Mount logs directory (optional)
+      - ./logs:/app/logs
+      # Mount config files (optional)
+      # - ./config:/app/config
+    restart: unless-stopped
+    networks:
+      - wcs-network
+    # Uncomment if you need to connect to other services
+    # depends_on:
+    #   - mysql
+    #   - redis
+    #   - rabbitmq
+
+  # Uncomment and configure if needed
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: operato-wcs-mysql
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=root_password
+  #     - MYSQL_DATABASE=wcs
+  #     - MYSQL_USER=wcs_user
+  #     - MYSQL_PASSWORD=your_password
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - mysql-data:/var/lib/mysql
+  #   networks:
+  #     - wcs-network
+
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: operato-wcs-redis
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - wcs-network
+
+  # rabbitmq:
+  #   image: rabbitmq:3-management
+  #   container_name: operato-wcs-rabbitmq
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672"
+  #   environment:
+  #     - RABBITMQ_DEFAULT_USER=guest
+  #     - RABBITMQ_DEFAULT_PASS=guest
+  #   networks:
+  #     - wcs-network
+
+networks:
+  wcs-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

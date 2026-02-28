@@ -1,0 +1,53 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Build outputs
+build
+bin
+.gradle
+target
+
+# IDE
+.idea
+.vscode
+.settings
+.classpath
+.project
+*.iml
+*.iws
+
+# Documentation
+docs
+*.md
+!README.md
+
+# Reference files
+ref
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+.ai
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Claude Code
+.claude
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files
+src/test
+
+# Environment files
+.env
+.env.*
+*.env
