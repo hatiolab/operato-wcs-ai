@@ -1,0 +1,27 @@
+package xyz.elidom.dbist.ddl;
+
+import org.springframework.core.env.Environment;
+
+/**
+ * DDL Startup Service가 완료된 후 Initial Setup을 실행하는 인터페이스 
+ * 
+ * @author shortstop
+ */
+public interface InitialSetup {
+	
+	/**
+	 * ready setup
+	 * 
+	 * @param env
+	 * @return
+	 */
+	public boolean readySetup(Environment env);
+
+	/**
+	 * initial setup
+	 * 
+	 * @param env
+	 * @return
+	 */
+	public boolean initialSetup(Environment env);
+}

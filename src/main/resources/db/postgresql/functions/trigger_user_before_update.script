@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION f_trigger_before_user_update()
+returns trigger
+AS $$
+DECLARE
+BEGIN
+   -- NODE 에서 사용자 활성화 
+	IF NEW.status = 'activated' THEN 
+		NEW.active_flag = true;		
+		NEW.fail_count = 0;
+	ELSE 
+		NEW.active_flag = false;
+	END IF;
+	
+	IF NEW.active_flag = true THEN
+	-- JAVA 에서 사용자 활성화
+		NEW.status = 'activated';
+		NEW.fail_count = 0;
+	ELSE 
+	-- JAVA 에서 사용자 비활성화
+		NEW.status = 'inactive';	
+	END IF;
+	
+	RETURN NEW;
+END; $$
+LANGUAGE 'plpgsql';
+
+
+CREATE TRIGGER tr_before_user_update
+    BEFORE UPDATE 
+    ON users
+    FOR EACH ROW
+    EXECUTE FUNCTION f_trigger_before_user_update();

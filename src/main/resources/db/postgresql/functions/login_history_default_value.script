@@ -1,0 +1,5 @@
+ALTER TABLE IF EXISTS login_histories ALTER COLUMN id SET DEFAULT uuid_generate_v4();
+
+ALTER TABLE IF EXISTS login_histories ALTER COLUMN accessed_at SET DEFAULT now();
+
+ALTER TABLE IF EXISTS login_histories ALTER COLUMN domain_id DROP NOT NULL;

@@ -1,0 +1,11 @@
+SELECT
+	G.GW_NM
+FROM
+	INDICATORS I
+	INNER JOIN GATEWAYS G ON I.DOMAIN_ID = G.DOMAIN_ID AND I.GW_CD = G.GW_CD
+WHERE
+	I.DOMAIN_ID = :domainId 
+	AND I.IND_CD = :indCd
+	#if($stageCd)
+	AND G.STAGE_CD = :stageCd
+	#end

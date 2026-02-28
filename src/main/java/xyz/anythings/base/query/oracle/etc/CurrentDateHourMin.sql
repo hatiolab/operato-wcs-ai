@@ -1,0 +1,1 @@
+select sysdate as current_time, to_char(sysdate, 'YYYY-MM-DD') as date_str, to_char(sysdate, 'HH24') as hour_str, to_char(sysdate, 'MI') as minute_str, to_char(sysdate, 'SS') as second_str

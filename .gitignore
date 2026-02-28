@@ -1,1 +1,11 @@
 ref/Operato_Intro.mp4
+
+# Gradle
+.gradle
+bin/
+build/
+.classpath
+.project
+.settings/org.eclipse.buildship.core.prefs
+.settings/org.eclipse.jdt.core.prefs
+.settings/org.springframework.ide.eclipse.prefs

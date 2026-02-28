@@ -1,0 +1,29 @@
+SELECT
+	S.ID AS STOCK_ID,
+	C.IND_CD,
+	:indColor AS IND_COLOR,
+	S.LOAD_QTY as LOAD_QTY,
+	S.ALLOC_QTY as ALLOC_QTY,
+	G.GW_NM AS GW_PATH
+FROM
+	STOCKS S
+		INNER JOIN CELLS C ON S.EQUIP_TYPE = C.EQUIP_TYPE AND S.EQUIP_CD = C.EQUIP_CD AND S.CELL_CD = C.CELL_CD
+		INNER JOIN INDICATORS I ON C.IND_CD = I.IND_CD
+		INNER JOIN GATEWAYS G ON G.GW_CD = I.GW_CD
+WHERE
+	S.DOMAIN_ID=:domainId
+	#if($equipType)
+	AND S.EQUIP_TYPE=:equipType
+	#end
+	#if($equipCd)
+	AND S.EQUIP_CD=:equipCd
+	#end
+	#if($indCd)
+	AND C.IND_CD=:indCd
+	#end
+	#if($fixedCell)
+	AND S.FIXED_FLAG = true
+	#end
+	#if($freeCell)
+	AND (S.FIXED_FLAG IS NULL OR S.FIXED_FLAG = false)
+	#end

@@ -1,0 +1,34 @@
+CREATE OR REPLACE FUNCTION f_trigger_before_user_create()
+returns trigger
+AS $$
+DECLARE
+BEGIN
+
+	-- 노드에서 생성할때 ... 
+	IF NEW.login IS NULL THEN
+		NEW.account_type = 'user';
+		NEW.login = NEW.email;
+		NEW.id = NEW.email;
+		-- factoryauth!@1
+		NEW.encrypted_password = '44948e5f12560941ba8a910489d6cd6e5f22e4b5c8b091f5396734b3de7a41f5';
+		NEW.fail_count = 0;
+		NEW.status = 'inactive';
+		NEW.super_user = false;
+		NEW.admin_flag = false;
+		NEW.operator_flag = false;
+		NEW.active_flag = false;
+		NEW.locale = 'ko-KR';	
+	END IF;
+	
+	RETURN NEW;
+END; $$
+LANGUAGE 'plpgsql';
+
+
+CREATE TRIGGER tr_before_user_create
+    BEFORE INSERT
+    ON users
+    FOR EACH ROW
+    EXECUTE FUNCTION f_trigger_before_user_create();
+
+

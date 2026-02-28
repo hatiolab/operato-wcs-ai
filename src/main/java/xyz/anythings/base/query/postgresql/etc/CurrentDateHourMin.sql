@@ -1,0 +1,1 @@
+select now() as current_time, to_char(now(), 'YYYY-MM-DD') as date_str, to_char(now(), 'HH24') as hour_str, to_char(now(), 'MI') as minute_str, to_char(now(), 'SS') as second_str
