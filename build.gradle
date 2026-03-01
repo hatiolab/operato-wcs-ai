@@ -28,6 +28,10 @@ java {
 	sourceCompatibility = '17'
 }
 
+springBoot {
+	mainClass = 'xyz.anythings.boot.AnythingsBootApplication'
+}
+
 jar {
 	
 	manifest {
@@ -75,6 +79,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-quartz'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	
 	implementation 'org.springframework.session:spring-session-data-redis'
@@ -130,7 +135,12 @@ dependencies {
 	
 	implementation group: 'cn.hutool', name: 'hutool-all', version: '5.7.20'
 	implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
-	
+
+	// JAXB dependencies for Java 11+ (javax.xml.bind compatibility)
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.9'
+	implementation 'javax.activation:activation:1.1.1'
+
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.3'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.3'
 }
