@@ -394,6 +394,36 @@ docker-compose logs -f
 
 ---
 
+## Claude Code Skills
+
+프로젝트의 반복 작업을 자동화하기 위한 Claude Code 스킬들은 `.claude/skills/` 디렉토리에 위치합니다.
+
+### 스킬 관리 규칙
+
+1. **스킬 생성 시**
+   - `.claude/skills/<skill-name>/SKILL.md` 파일 생성 (YAML frontmatter + 마크다운)
+   - **필수**: `.claude/skills/README.md` 파일에 새 스킬 정보 추가
+   - 명명 규칙: `<동사>-<대상>` 형식 (예: `deploy-backend`, `docker-backend`)
+
+2. **스킬 수정 시**
+   - SKILL.md 수정 후 README.md도 함께 업데이트
+   - 주요 기능, 사용법, 옵션 변경 사항 반영
+
+3. **스킬 삭제 시**
+   - 디렉토리 삭제 후 README.md에서도 해당 스킬 정보 제거
+
+### 현재 사용 가능한 스킬
+
+- `/commit` — Git 커밋 자동화
+- `/deploy-backend` — 백엔드 빌드 및 JAR 생성
+- `/run-backend` — 백엔드 서버 실행
+- `/docker-backend` — Docker 이미지 빌드 및 실행
+- `/log` — 작업 로그 기록
+
+자세한 사용법은 [.claude/skills/README.md](.claude/skills/README.md) 참조.
+
+---
+
 ## 코딩 컨벤션
 
 > 추후 팀 합의 후 이곳에 추가 예정
