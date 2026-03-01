@@ -1,7 +1,7 @@
 ---
 name: log
 description: 현재 세션에서 수행한 작업 내용을 .ai/logs/YYYY-MM-DD.md 파일에 기록합니다. 작업 일지를 남기거나 오늘 한 일을 정리할 때 사용합니다.
-disable-model-invocation: true
+disable-model-invocation: false
 argument-hint: "[작업 요약 메시지 (선택)]"
 ---
 

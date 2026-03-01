@@ -24,11 +24,30 @@ Spring Boot 애플리케이션을 로컬 환경에서 실행합니다.
 
 2. **포트 충돌 확인**
    ```bash
-   lsof -i :8080
-   # 또는 사용자 지정 포트
-   lsof -i :<port>
+   # 프로파일에 따른 포트 확인
+   PROFILE=${PROFILE:-default}
+
+   if [ "$PROFILE" != "default" ] && [ -f "src/main/resources/application-${PROFILE}.properties" ]; then
+       # 프로파일별 properties 먼저 확인
+       PORT=$(grep "^server.port=" src/main/resources/application-${PROFILE}.properties | cut -d'=' -f2)
+   fi
+
+   # 프로파일에 없으면 기본 properties 확인
+   if [ -z "$PORT" ]; then
+       PORT=$(grep "^server.port=" src/main/resources/application.properties | cut -d'=' -f2)
+   fi
+
+   # 그래도 없으면 Spring Boot 기본값
+   PORT=${PORT:-8080}
+
+   # 해당 포트가 사용 중인지 확인
+   lsof -i :${PORT}
    ```
-   - 기본 포트 8080이 사용 중이면 경고
+   - **프로파일별 포트 우선순위**:
+     1. `application-{profile}.properties`의 server.port
+     2. `application.properties`의 server.port
+     3. Spring Boot 기본값 (8080)
+   - 해당 포트가 사용 중이면 경고
    - 다른 포트로 실행하거나 기존 프로세스 종료 제안
 
 3. **JAR 모드인 경우 파일 존재 확인**
@@ -42,8 +61,9 @@ Spring Boot 애플리케이션을 로컬 환경에서 실행합니다.
 `$ARGUMENTS`로 전달된 옵션을 파싱:
 
 - `--jar` 또는 `-j`: JAR 파일 직접 실행 (기본값: Gradle bootRun)
-- `--profile=<profile>` 또는 `-p <profile>`: Spring 프로파일 지정 (dev, prod 등)
-- `--port=<port>`: 서버 포트 지정 (기본값: 8080)
+- `--profile=<profile>` 또는 `-p <profile>`: Spring 프로파일 지정 (dev, prod, factory 등)
+  - 프로파일 지정 시 `application-{profile}.properties`의 설정 우선 적용
+- `--port=<port>`: 서버 포트 지정 (미지정 시 프로파일별 properties의 server.port 사용)
 - `--debug` 또는 `-d`: 디버그 모드 활성화 (포트 5005)
 - 인자가 없으면 기본 동작: Gradle bootRun으로 실행
 
@@ -114,7 +134,7 @@ java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 \
 
 **로그에서 확인할 항목:**
 - `Started [ApplicationName] in X.XXX seconds` — 시작 완료
-- `Tomcat started on port(s): 8080 (http)` — 포트 확인
+- `Tomcat started on port(s): <포트> (http)` — 포트 확인 (application.properties 설정 확인)
 - 에러 메시지 유무
 
 ### 5. 헬스 체크
@@ -125,11 +145,29 @@ java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 \
 # 30초 대기 후 헬스 체크
 sleep 30
 
-# Actuator 헬스 체크
-curl -f http://localhost:8080/actuator/health || echo "❌ 헬스 체크 실패"
+# 프로파일에 따른 포트 확인
+PROFILE=${PROFILE:-default}
 
-# 커스텀 포트인 경우
-curl -f http://localhost:<port>/actuator/health || echo "❌ 헬스 체크 실패"
+if [ "$PROFILE" != "default" ] && [ -f "src/main/resources/application-${PROFILE}.properties" ]; then
+    # 프로파일별 properties 먼저 확인
+    PORT=$(grep "^server.port=" src/main/resources/application-${PROFILE}.properties | cut -d'=' -f2)
+fi
+
+# 프로파일에 없으면 기본 properties 확인
+if [ -z "$PORT" ]; then
+    PORT=$(grep "^server.port=" src/main/resources/application.properties | cut -d'=' -f2)
+fi
+
+# 그래도 없으면 Spring Boot 기본값
+PORT=${PORT:-8080}
+
+# --port 옵션으로 오버라이드한 경우
+if [ -n "$CUSTOM_PORT" ]; then
+    PORT=$CUSTOM_PORT
+fi
+
+# Actuator 헬스 체크
+curl -f http://localhost:${PORT}/actuator/health || echo "❌ 헬스 체크 실패"
 ```
 
 **헬스 체크 응답 예시:**
@@ -150,21 +188,28 @@ curl -f http://localhost:<port>/actuator/health || echo "❌ 헬스 체크 실�
 - Gradle bootRun (또는 JAR 직접 실행)
 
 **서버 정보:**
-- URL: http://localhost:8080
+- URL: http://localhost:<포트>
 - 프로파일: dev (또는 지정된 프로파일)
-- 포트: 8080 (또는 지정된 포트)
+- 포트: <application.properties의 server.port 또는 지정된 포트>
 - 디버그 포트: 5005 (디버그 모드인 경우)
 
 **헬스 체크:**
 - Status: UP ✅
 
 **유용한 명령어:**
-- 헬스 체크: curl http://localhost:8080/actuator/health
+- 헬스 체크: curl http://localhost:<포트>/actuator/health
 - 서버 종료: Ctrl+C (포그라운드 실행 시)
 
 **다음 단계:**
-- API 테스트: http://localhost:8080/api/...
-- Swagger UI: http://localhost:8080/swagger-ui.html (활성화된 경우)
+- API 테스트: http://localhost:<포트>/api/...
+- Swagger UI: http://localhost:<포트>/swagger-ui.html (활성화된 경우)
+
+**참고:**
+- **포트 결정 우선순위** (Spring Boot 표준):
+  1. `--port` 옵션 (최우선)
+  2. `application-{profile}.properties`의 server.port
+  3. `application.properties`의 server.port (현재: 9500)
+  4. Spring Boot 기본값 (8080)
 ```
 
 ## 옵션별 실행 예시
@@ -191,16 +236,29 @@ curl -f http://localhost:<port>/actuator/health || echo "❌ 헬스 체크 실�
 java -jar build/libs/operato-wcs-ai.jar
 ```
 
-### 프로파일 지정 (운영 환경)
+### 프로파일 지정
 
+**개발 환경 (dev)**
+```bash
+/run-backend --profile=dev
+```
+실행 명령어:
+```bash
+./gradlew bootRun --args='--spring.profiles.active=dev'
+```
+포트: `application-dev.properties`의 server.port (현재: 9500)
+
+**운영 환경 (prod) - JAR 실행**
 ```bash
 /run-backend --jar --profile=prod
 ```
-
 실행 명령어:
 ```bash
 java -jar -Dspring.profiles.active=prod build/libs/operato-wcs-ai.jar
 ```
+포트: `application-prod.properties`의 server.port (없으면 application.properties 사용)
+
+**사용 가능한 프로파일**: dev, prod, factory, demobox, ildong, operato2, postgres
 
 ### 포트 변경
 
