@@ -33,11 +33,11 @@ import xyz.elidom.sys.system.service.AbstractRestService;
 import xyz.elidom.sys.util.MessageUtil;
 import xyz.elidom.util.ValueUtil;
 
-@RestController
-@Transactional
-@ResponseStatus(HttpStatus.OK)
-@RequestMapping("/rest/printouts")
-@ServiceDesc(description = "Printout Service API")
+//@RestController
+//@Transactional
+//@ResponseStatus(HttpStatus.OK)
+//@RequestMapping("/rest/printouts")
+//@ServiceDesc(description = "Printout Service API")
 public class PrintoutController extends AbstractRestService {
     /**
      * 프린팅 서비스

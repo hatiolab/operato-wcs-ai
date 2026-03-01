@@ -1,0 +1,55 @@
+SELECT
+	CASE WHEN RUN_HOUR = 0 THEN 0 ELSE ROUND(ACTUAL_PCS / RUN_HOUR, 1) END AS UPH,
+	RUN_MIN AS EQUIP_RUNTIME
+FROM (
+	SELECT
+		B.PICKED_QTY AS ACTUAL_PCS,
+		ROUND(extract(epoch from (A.FINISHED_AT - A.INSTRUCTED_AT) / 3600)::integer, 1) AS RUN_HOUR,
+		ROUND(extract(epoch from (A.FINISHED_AT - A.INSTRUCTED_AT) / 60)::integer, 1) AS RUN_MIN
+	FROM (
+		(SELECT
+			ID AS BATCH_ID,
+			INSTRUCTED_AT,
+			NOW() AS FINISHED_AT
+		FROM
+			JOB_BATCHES
+		WHERE
+			DOMAIN_ID = :domainId
+			AND ID = :batchId
+		) A
+		
+		INNER JOIN
+		
+		#if($pickingMode)
+		(SELECT
+			BATCH_ID,
+			COALESCE(SUM(PICKED_QTY), 0) AS PICKED_QTY
+		FROM
+			JOB_INSTANCES
+		WHERE
+			DOMAIN_ID = :domainId
+			AND BATCH_ID = :batchId
+		GROUP BY
+			BATCH_ID
+		) B
+		
+		ON A.BATCH_ID = B.BATCH_ID
+		#end
+		
+		#if($manualMode)
+		(SELECT
+			BATCH_ID,
+			COALESCE(SUM(ORDER_QTY), 0) AS PICKED_QTY
+		FROM
+			ORDERS
+		WHERE
+			DOMAIN_ID = :domainId
+			AND BATCH_ID = :batchId
+		GROUP BY
+			BATCH_ID
+		) B
+		
+		ON A.BATCH_ID = B.BATCH_ID
+		#end
+	)
+) X

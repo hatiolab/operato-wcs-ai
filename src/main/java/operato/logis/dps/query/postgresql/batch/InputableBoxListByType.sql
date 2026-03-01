@@ -1,0 +1,85 @@
+SELECT 
+	Z.BOX_TYPE_CD
+	, Z.BOX_TYPE_NM
+	, Z.INPUT_PLAN_QTY
+	, Z.INPUT_BOX_QTY
+	, Z.INPUTABLE_BOX_QTY
+	, Z.INPUT_PLAN_QTY - Z.INPUT_BOX_QTY - Z.INPUTABLE_BOX_QTY AS REMAIN_QTY
+  FROM (
+		SELECT
+			X.BOX_TYPE_CD
+			, X.BOX_TYPE_NM
+			, SUM(X.INPUT_PLAN_QTY) AS INPUT_PLAN_QTY
+			, COALESCE(SUM(U.INPUTABLE_BOX_QTY), 0) AS INPUTABLE_BOX_QTY
+			, COALESCE(SUM(Y.INPUT_BOX_QTY), 0) AS INPUT_BOX_QTY
+		FROM 
+			(SELECT 
+				B.BOX_TYPE_CD,
+				B.BOX_TYPE_NM,
+				COALESCE(O.CNT, 0) AS INPUT_PLAN_QTY
+			FROM 
+				BOX_TYPES B
+				LEFT OUTER JOIN
+				(SELECT
+					BOX_TYPE_CD,
+					COUNT(DISTINCT(ORDER_NO)) AS CNT
+				FROM
+					ORDERS
+				WHERE
+					DOMAIN_ID = :domainId
+					AND BATCH_ID = :batchId
+					AND EQUIP_TYPE = :equipType
+					#if($equipCd)
+					AND EQUIP_CD = :equipCd
+					#end
+				GROUP BY
+					BOX_TYPE_CD) O
+				ON B.BOX_TYPE_CD = O.BOX_TYPE_CD
+		   WHERE B.STAGE_CD = :stageCd 
+		   #if($comCd)
+		   AND B.COM_CD = :comCd
+		   #end
+			) X
+
+			LEFT OUTER JOIN 
+
+			(SELECT
+				BOX_TYPE_CD, COUNT(DISTINCT(ORDER_NO)) AS INPUT_BOX_QTY
+			FROM
+				JOB_INSTANCES
+			WHERE DOMAIN_ID = :domainId
+				AND BATCH_ID = :batchId
+				AND EQUIP_TYPE = :equipType
+				#if($equipCd)
+				AND EQUIP_CD = :equipCd
+				#end
+				AND ORDER_TYPE = 'MT'
+				AND STATUS NOT IN ('BW', 'W') -- 박스 요청 대기 / 박스 맵핑 대기 
+			GROUP BY
+				BOX_TYPE_CD) Y
+				
+			ON X.BOX_TYPE_CD = Y.BOX_TYPE_CD
+				
+			LEFT OUTER JOIN
+			
+			(SELECT
+				BOX_TYPE_CD, COUNT(DISTINCT(ORDER_NO)) AS INPUTABLE_BOX_QTY
+			FROM
+				JOB_INSTANCES
+			WHERE DOMAIN_ID = :domainId
+				AND BATCH_ID = :batchId
+				AND EQUIP_TYPE = :equipType
+				#if($equipCd)
+				AND EQUIP_CD = :equipCd
+				#end
+				AND ORDER_TYPE = 'MT'
+				AND STATUS IN ('BW','W') -- 박스 요청 대기 / 박스 맵핑 대기 
+			GROUP BY
+				BOX_TYPE_CD) U
+
+			ON X.BOX_TYPE_CD = U.BOX_TYPE_CD
+			
+		GROUP BY X.BOX_TYPE_CD, X.BOX_TYPE_NM
+	) Z
+ORDER BY 
+	REMAIN_QTY DESC, Z.BOX_TYPE_CD

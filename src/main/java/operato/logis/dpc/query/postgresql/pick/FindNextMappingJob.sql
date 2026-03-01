@@ -1,0 +1,30 @@
+SELECT
+	MT.ORDER_NO
+FROM (
+	SELECT
+		A.ORDER_NO
+	FROM (
+		SELECT 
+			ORDER_NO,
+			COUNT(DISTINCT SKU_CD) AS SKU_CNT,
+			SUM(PICK_QTY) AS PICK_CNT
+		FROM
+			JOB_INSTANCES
+		WHERE
+			DOMAIN_ID = :domainId
+			AND BATCH_ID = :batchId
+			AND INPUT_SEQ = 0
+			AND STATUS = 'W'
+			#if($boxTypeCd)
+			AND BOX_TYPE_CD = :boxTypeCd
+			#end
+			#if($orderType)
+			AND ORDER_TYPE = :orderType
+			#end
+		GROUP BY
+			ORDER_NO
+	) A
+	ORDER BY
+		A.SKU_CNT ASC, A.PICK_CNT ASC
+) MT
+	LIMIT 1

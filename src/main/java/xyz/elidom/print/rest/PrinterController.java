@@ -36,11 +36,11 @@ import xyz.elidom.sys.system.print.ElidomPrintingConfig;
 import xyz.elidom.sys.system.service.AbstractRestService;
 import xyz.elidom.util.ValueUtil;
 
-@RestController
-@Transactional
-@ResponseStatus(HttpStatus.OK)
-@RequestMapping("/rest/printers")
-@ServiceDesc(description = "Printer Service API")
+//@RestController
+//@Transactional
+//@ResponseStatus(HttpStatus.OK)
+//@RequestMapping("/rest/printers")
+//@ServiceDesc(description = "Printer Service API")
 public class PrinterController extends AbstractRestService {
 	/**
 	 * Event Publisher

@@ -1,0 +1,61 @@
+SELECT
+	OT.ID
+FROM (
+	WITH T_ORDER AS (
+		SELECT
+			*
+		FROM 
+			JOB_INSTANCES
+		WHERE 
+			DOMAIN_ID = :domainId
+			AND BATCH_ID = :batchId
+			AND COM_CD = :comCd
+			AND SKU_CD = :skuCd
+			AND STATUS IN ('W', 'P', 'I')
+			#if($orderQty)
+			AND PICK_QTY = :orderQty
+			#end
+			#if($boxTypeCd)
+			AND BOX_TYPE_CD = :boxTypeCd
+			#end
+	),
+	T_BEF_JOB AS (
+		SELECT 
+			1 AS ORDER_SEQ, ID, PICK_QTY - PICKED_QTY AS PICK_QTY
+		FROM
+			T_ORDER
+		WHERE
+			BOX_ID = :boxId AND STATUS IN ('P', 'I')
+	),
+	T_READY_JOB AS (
+		SELECT
+			2 AS ORDER_SEQ, A.ID, A.PICK_QTY
+		FROM (
+			SELECT
+				ID, PICK_QTY
+			FROM
+				T_ORDER
+			WHERE
+				INPUT_SEQ = 0
+				AND STATUS = 'W'
+				ORDER BY PICK_QTY
+		) A
+		LIMIT 1
+	)
+	SELECT 
+		C.ORDER_SEQ, C.ID, C.PICK_QTY
+	FROM (
+		SELECT 
+			ORDER_SEQ, ID, PICK_QTY
+		FROM (
+			SELECT ORDER_SEQ, ID, PICK_QTY FROM T_BEF_JOB
+
+			UNION ALL
+
+			SELECT ORDER_SEQ, ID, PICK_QTY FROM T_READY_JOB
+		) B
+		ORDER BY
+			B.ORDER_SEQ, B.PICK_QTY
+	) C
+	LIMIT 1
+) OT
