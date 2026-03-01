@@ -1,5 +1,5 @@
 ---
-name: deploy
+name: deploy-backend
 description: Spring Boot 백엔드를 빌드하고 배포 가능한 JAR 파일을 생성합니다. Java 버전 자동 설정 및 빌드 검증을 수행합니다.
 disable-model-invocation: false
 argument-hint: "[옵션: --with-tests | --no-clean]"
@@ -136,16 +136,16 @@ java -jar build/libs/operato-wcs-ai.jar
 
 ```bash
 # 기본 빌드 (테스트 스킵, clean 포함)
-/deploy
+/deploy-backend
 
 # 테스트 포함 빌드
-/deploy --with-tests
+/deploy-backend --with-tests
 
 # 증분 빌드 (clean 스킵)
-/deploy --no-clean
+/deploy-backend --no-clean
 
 # 테스트 포함 + 증분 빌드
-/deploy --with-tests --no-clean
+/deploy-backend --with-tests --no-clean
 ```
 
 ## 배포 후 실행

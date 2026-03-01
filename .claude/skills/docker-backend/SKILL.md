@@ -80,7 +80,7 @@ docker run -d \
 ```bash
 # 1. JAR 파일 존재 확인
 if [ ! -f build/libs/operato-wcs-ai.jar ]; then
-  echo "JAR 파일이 없습니다. /deploy 스킬로 먼저 빌드하세요."
+  echo "JAR 파일이 없습니다. /deploy-backend 스킬로 먼저 빌드하세요."
   exit 1
 fi
 
@@ -101,7 +101,7 @@ docker run -d \
 - 로컬에서 테스트한 JAR와 동일
 
 **단점:**
-- 사전에 로컬 빌드 필요 (`/deploy` 스킬 사용)
+- 사전에 로컬 빌드 필요 (`/deploy-backend` 스킬 사용)
 
 ### 4. 빌드 전 정리 (--clean 옵션)
 
@@ -233,7 +233,7 @@ docker-compose restart             # 재시작
 ❌ JAR 파일이 없습니다.
 
 다음 명령어로 먼저 빌드하세요:
-/deploy
+/deploy-backend
 ```
 
 ### 포트 충돌
@@ -274,7 +274,7 @@ open -a Docker
 ## 주의사항
 
 1. **사전 빌드 필요 (--simple 사용 시)**
-   - `/deploy` 스킬로 먼저 JAR 파일 빌드 필요
+   - `/deploy-backend` 스킬로 먼저 JAR 파일 빌드 필요
    - JAR 파일 경로: `build/libs/operato-wcs-ai.jar`
 
 2. **포트 충돌 확인**
@@ -312,7 +312,7 @@ open -a Docker
 
 ```bash
 # 1. 백엔드 빌드
-/deploy
+/deploy-backend
 
 # 2. Docker 이미지 빌드 및 실행 (빠른 방법)
 /docker-backend --simple
@@ -344,7 +344,7 @@ docker stats operato-wcs-backend
 
 ## 다른 스킬과의 연계
 
-- `/deploy` → `/docker-backend --simple`: 빌드 후 Docker 이미지 생성
+- `/deploy-backend` → `/docker-backend --simple`: 빌드 후 Docker 이미지 생성
 - `/docker-backend` → `/log`: Docker 빌드 결과 로그 기록
 - `/docker-backend` → `/commit`: Docker 설정 파일 커밋
 
