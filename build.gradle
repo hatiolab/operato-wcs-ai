@@ -29,7 +29,7 @@ java {
 }
 
 springBoot {
-	mainClass = 'xyz.anythings.boot.AnythingsBootApplication'
+	mainClass = 'operato.logis.OperatoWcsBootApplication'
 }
 
 jar {
@@ -37,7 +37,7 @@ jar {
 	manifest {
 		attributes 'Implementation-Title': 'operato-wcs-ai',
 					'Implementation-Version': version,
-					'Main-Class': 'anythings.boot.AnythingsBootApplication'
+					'Main-Class': 'operato.logis.OperatoWcsBootApplication'
 	}
 	
 	archiveBaseName = "${project.name}"
@@ -65,8 +65,7 @@ repositories {
 }
 
 dependencies {
-	// implementation 'com.hatiolab.otarepo-core:otarepo-core:0.0.1-SNAPSHOT'
-	// implementation project(':otarepo-core')
+	implementation project(':otarepo-core')
 	
 	implementation 'org.springframework.boot:spring-boot-starter-amqp'
 	implementation 'org.springframework.boot:spring-boot-starter-cache'

@@ -1,4 +1,4 @@
-package operato.logis.light.entity;
+package xyz.anythings.gw.entity;
 
 import xyz.elidom.dbist.annotation.Column;
 import xyz.elidom.dbist.annotation.GenerationRule;
