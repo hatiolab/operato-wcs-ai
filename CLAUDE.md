@@ -417,6 +417,7 @@ docker-compose logs -f
 - `/commit` — Git 커밋 자동화
 - `/deploy-backend` — 백엔드 빌드 및 JAR 생성
 - `/run-backend` — 백엔드 서버 실행
+- `/stop-backend` — 백엔드 서버 중지
 - `/docker-backend` — Docker 이미지 빌드 및 실행
 - `/log` — 작업 로그 기록
 

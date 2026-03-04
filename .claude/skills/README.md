@@ -117,7 +117,33 @@ Spring Boot 애플리케이션을 로컬 환경에서 실행합니다.
 
 ---
 
-### 4. `/docker-backend` — Docker 이미지 빌드 및 실행
+### 4. `/stop-backend` — 백엔드 서버 중지
+
+실행 중인 Spring Boot 백엔드 서버를 안전하게 중지합니다.
+
+**주요 기능:**
+- 프로파일 기반 포트 자동 감지 (기본 9500)
+- 정상 종료(SIGTERM) 후 미종료 시 강제 종료(SIGKILL)
+- Gradle daemon 포함 전체 중지 옵션
+
+**사용법:**
+```bash
+# 기본 중지 (포트 9500)
+/stop-backend
+
+# 특정 포트 서버 중지
+/stop-backend --port=8080
+
+# 모든 관련 프로세스 중지 (Gradle daemon 포함)
+/stop-backend --all
+```
+
+**참고:**
+- [stop-backend/SKILL.md](stop-backend/SKILL.md) — 상세 스킬 정의
+
+---
+
+### 5. `/docker-backend` — Docker 이미지 빌드 및 실행
 
 Spring Boot 백엔드를 Docker 이미지로 빌드하고 컨테이너로 실행합니다.
 
@@ -162,7 +188,7 @@ docker logs -f operato-wcs-backend
 
 ---
 
-### 5. `/log` — 작업 로그 기록
+### 6. `/log` — 작업 로그 기록
 
 현재 세션에서 수행한 작업 내용을 로그 파일로 기록합니다.
 
@@ -267,6 +293,8 @@ curl http://localhost:9500/actuator/health
 ├── deploy-backend/
 │   └── SKILL.md
 ├── run-backend/
+│   └── SKILL.md
+├── stop-backend/
 │   └── SKILL.md
 ├── docker-backend/
 │   └── SKILL.md
