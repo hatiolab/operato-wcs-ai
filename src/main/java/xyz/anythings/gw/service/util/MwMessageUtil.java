@@ -16,8 +16,8 @@ import xyz.anythings.gw.service.model.IndOnStockReq;
 import xyz.anythings.gw.service.mq.model.IndicatorOnInformation;
 import xyz.anythings.gw.service.mq.model.MessageObject;
 import xyz.elidom.exception.server.ElidomServiceException;
-import xyz.elidom.rabbitmq.client.event.SystemMessageReceiveEvent;
-import xyz.elidom.rabbitmq.message.MessageProperties;
+import xyz.elidom.mw.rabbitmq.client.event.SystemMessageReceiveEvent;
+import xyz.elidom.mw.rabbitmq.message.MessageProperties;
 import xyz.elidom.util.ValueUtil;
 
 /**

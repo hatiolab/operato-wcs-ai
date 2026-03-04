@@ -14,7 +14,7 @@ import xyz.anythings.gw.service.mq.model.MessageObject;
 import xyz.anythings.gw.service.util.MwMessageUtil;
 import xyz.elidom.dbist.annotation.Column;
 import xyz.elidom.exception.ElidomException;
-import xyz.elidom.rabbitmq.message.MessageProperties;
+import xyz.elidom.mw.rabbitmq.message.MessageProperties;
 import xyz.elidom.sys.entity.ErrorLog;
 import xyz.elidom.sys.rest.ErrorLogController;
 import xyz.elidom.sys.util.ExceptionUtil;

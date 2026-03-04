@@ -25,7 +25,7 @@ import xyz.anythings.gw.service.mq.model.device.DeviceCommandFactory;
 import xyz.anythings.gw.service.util.MwMessageUtil;
 import xyz.anythings.sys.util.AnyOrmUtil;
 import xyz.elidom.dbist.dml.Query;
-import xyz.elidom.rabbitmq.message.MessageProperties;
+import xyz.elidom.mw.rabbitmq.message.MessageProperties;
 import xyz.elidom.sys.SysConstants;
 import xyz.elidom.sys.entity.Setting;
 import xyz.elidom.util.ValueUtil;

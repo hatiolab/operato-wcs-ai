@@ -3,7 +3,6 @@ package xyz.anythings.base.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import xyz.anythings.base.LogisConstants;
@@ -19,7 +18,6 @@ import xyz.anythings.sys.event.model.SysEvent;
 import xyz.anythings.sys.service.AbstractExecutionService;
 import xyz.elidom.core.entity.Code;
 import xyz.elidom.core.entity.CodeDetail;
-import xyz.elidom.core.rest.CodeController;
 import xyz.elidom.util.ValueUtil;
 
 /**
@@ -28,14 +26,7 @@ import xyz.elidom.util.ValueUtil;
  * @author shortstop
  */
 @Component
-public class ReceiveBatchService extends AbstractExecutionService implements IReceiveBatchService {
-
-	/**
-	 * 코드 컨트롤러
-	 */
-	@Autowired
-	private CodeController codeCtrl;
-	
+public class ReceiveBatchService extends AbstractExecutionService implements IReceiveBatchService {	
 	/**
 	 * 상위 시스템으로 부터 구역, 스테이지, 고객사, 작업 일자로 배치 및 주문 수신을 위한 정보를 조회하여 리턴
 	 * - 사용자가 수신 받을 배치가 있는지 확인한 후 수신하도록 하기 위함
@@ -62,7 +53,7 @@ public class ReceiveBatchService extends AbstractExecutionService implements IRe
 		
 		if(ValueUtil.isEmpty(params)) {
 			// 2. 모든 작업 유형을 찾는다. 공통 코드에서 찾음
-			Code code = this.codeCtrl.findByName(domainId, LogisConstants.JOB_TYPE);
+			Code code = Code.findByName(domainId, LogisConstants.JOB_TYPE);
 			List<CodeDetail> details = code.getItems();
 
 			// 3. 각 작업 유형별로 이벤트 전달

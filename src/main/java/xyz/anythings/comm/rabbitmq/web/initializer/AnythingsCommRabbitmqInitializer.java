@@ -13,8 +13,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import xyz.anythings.comm.rabbitmq.config.ModuleProperties;
-import xyz.elidom.rabbitmq.config.RabbitmqProperties;
-import xyz.elidom.rabbitmq.rest.VirtualHostController;
+import xyz.elidom.mw.rabbitmq.config.RabbitmqProperties;
+import xyz.elidom.mw.rabbitmq.rest.VirtualHostController;
 import xyz.elidom.sys.config.ModuleConfigSet;
 import xyz.elidom.sys.system.service.api.IEntityFieldCache;
 import xyz.elidom.sys.system.service.api.IServiceFinder;

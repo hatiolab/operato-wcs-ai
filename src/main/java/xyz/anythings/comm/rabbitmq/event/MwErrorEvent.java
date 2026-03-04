@@ -1,7 +1,7 @@
 package xyz.anythings.comm.rabbitmq.event;
 
 import xyz.anythings.sys.event.model.SysEvent;
-import xyz.elidom.rabbitmq.client.event.SystemMessageReceiveEvent;
+import xyz.elidom.mw.rabbitmq.client.event.SystemMessageReceiveEvent;
 
 /**
  * 에러 이벤트 
