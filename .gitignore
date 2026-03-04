@@ -10,3 +10,4 @@ build/
 .settings/org.eclipse.jdt.core.prefs
 .settings/org.springframework.ide.eclipse.prefs
 *.log
+.vscode/settings.json
