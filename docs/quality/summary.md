@@ -146,10 +146,10 @@ http.authorizeHttpRequests()
 
 | 문서 | 용도 |
 |------|------|
-| [CODE_QUALITY_REPORT.md](CODE_QUALITY_REPORT.md) | 📊 종합 품질 분석 보고서 (23KB) |
-| [SECURITY_IMPROVEMENTS.md](SECURITY_IMPROVEMENTS.md) | 🔒 보안 개선 가이드 (8KB) |
-| [TESTING_GUIDE.md](TESTING_GUIDE.md) | ✅ 테스트 작성 가이드 (17KB) |
-| [IMPROVEMENT_CHECKLIST.md](IMPROVEMENT_CHECKLIST.md) | ✔️ 개선 체크리스트 (22KB) |
+| [code-quality-report.md](code-quality-report.md) | 📊 종합 품질 분석 보고서 (23KB) |
+| [security-improvements.md](security-improvements.md) | 🔒 보안 개선 가이드 (8KB) |
+| [testing-guide.md](testing-guide.md) | ✅ 테스트 작성 가이드 (17KB) |
+| [improvement-checklist.md](improvement-checklist.md) | ✔️ 개선 체크리스트 (22KB) |
 | [README.md](README.md) | 📖 문서 인덱스 (7KB) |
 
 ---
@@ -171,4 +171,4 @@ http.authorizeHttpRequests()
 
 ---
 
-**다음 단계**: [IMPROVEMENT_CHECKLIST.md](IMPROVEMENT_CHECKLIST.md)에서 Phase 1 시작
+**다음 단계**: [improvement-checklist.md](improvement-checklist.md)에서 Phase 1 시작

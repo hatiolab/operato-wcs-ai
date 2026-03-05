@@ -1117,7 +1117,7 @@ done
 
 - [backend-docker.md](backend-docker.md) — Docker 배포 가이드
 - [database-specification.md](../design/database-specification.md) — DB 명세
-- [operato-wcs-development-plan.md](../plans/operato-wcs-development-plan.md) — 개발 계획
+- [development-plan.md](../plans/development-plan.md) — 개발 계획
 - [CLAUDE.md](/Users/shortstop/Git/operato-wcs-ai/CLAUDE.md) — 프로젝트 컨벤션
 
 ---

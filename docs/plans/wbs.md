@@ -6,7 +6,7 @@
 - **버전**: 1.0.0
 - **작성일**: 2026-03-01
 - **작성자**: Claude Sonnet 4.5
-- **기준 계획서**: [operato-wcs-development-plan.md](operato-wcs-development-plan.md)
+- **기준 계획서**: [development-plan.md](development-plan.md)
 
 ---
 
@@ -491,6 +491,6 @@
 
 ## 참고 문서
 
-- [operato-wcs-development-plan.md](operato-wcs-development-plan.md) — 프로젝트 전체 계획서
+- [development-plan.md](development-plan.md) — 프로젝트 전체 계획서
 - [CLAUDE.md](/Users/shortstop/Git/operato-wcs-ai/CLAUDE.md) — 프로젝트 컨벤션 및 규칙
 - [backend-refactoring-plan.md](/Users/shortstop/Git/operato-wcs-ai/docs/refactoring/backend-refactoring-plan.md) — 백엔드 리팩토링 계획

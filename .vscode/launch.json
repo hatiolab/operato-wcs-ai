@@ -7,13 +7,6 @@
             "request": "launch",
             "mainClass": "operato.logis.OperatoWcsBootApplication",
             "args": "--spring.profiles.active=dev"
-        },
-        {
-            "type": "java",
-            "name": "WCS (factory)",
-            "request": "launch",
-            "mainClass": "operato.logis.OperatoWcsBootApplication",
-            "args": "--spring.profiles.active=factory"
         }
     ]
 }

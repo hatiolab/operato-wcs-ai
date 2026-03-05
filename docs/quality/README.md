@@ -13,10 +13,10 @@
 
 | 문서 | 설명 | 주요 내용 |
 |------|------|----------|
-| **[CODE_QUALITY_REPORT.md](CODE_QUALITY_REPORT.md)** | 📊 종합 품질 분석 보고서 | 항목별 상세 평가, 강점/약점 분석, 우선순위별 권장사항 |
-| **[SECURITY_IMPROVEMENTS.md](SECURITY_IMPROVEMENTS.md)** | 🔒 보안 개선 가이드 | 취약점 분석, 암호화 방법, Spring Security 강화 |
-| **[TESTING_GUIDE.md](TESTING_GUIDE.md)** | ✅ 테스트 작성 가이드 | 테스트 환경 구축, 단위/통합 테스트 예시, 커버리지 측정 |
-| **[IMPROVEMENT_CHECKLIST.md](IMPROVEMENT_CHECKLIST.md)** | ✔️ 개선 체크리스트 | 단계별 실행 계획, 진행 상황 추적 |
+| **[code-quality-report.md](code-quality-report.md)** | 📊 종합 품질 분석 보고서 | 항목별 상세 평가, 강점/약점 분석, 우선순위별 권장사항 |
+| **[security-improvements.md](security-improvements.md)** | 🔒 보안 개선 가이드 | 취약점 분석, 암호화 방법, Spring Security 강화 |
+| **[testing-guide.md](testing-guide.md)** | ✅ 테스트 작성 가이드 | 테스트 환경 구축, 단위/통합 테스트 예시, 커버리지 측정 |
+| **[improvement-checklist.md](improvement-checklist.md)** | ✔️ 개선 체크리스트 | 단계별 실행 계획, 진행 상황 추적 |
 
 ---
 
@@ -48,7 +48,7 @@ commons-dbcp:1.4             // 2011년 버전 (매우 오래됨)
 
 **영향**: 원격 코드 실행(RCE) 가능 → 시스템 전체 장악 위험
 
-**조치 방법**: [SECURITY_IMPROVEMENTS.md](SECURITY_IMPROVEMENTS.md#1-취약한-라이브러리-업그레이드) 참조
+**조치 방법**: [security-improvements.md](security-improvements.md#1-취약한-라이브러리-업그레이드) 참조
 
 ---
 
@@ -63,7 +63,7 @@ spring.datasource.url=60.196.69.234:20000  # 실제 IP 노출
 
 **영향**: Git 저장소에 민감 정보 영구 보존, 외부 유출 시 시스템 장악 가능
 
-**조치 방법**: [SECURITY_IMPROVEMENTS.md](SECURITY_IMPROVEMENTS.md#2-민감-정보-암호화) 참조
+**조치 방법**: [security-improvements.md](security-improvements.md#2-민감-정보-암호화) 참조
 
 ---
 
@@ -77,7 +77,7 @@ spring.datasource.url=60.196.69.234:20000  # 실제 IP 노출
 
 **영향**: 품질 보증 불가능, 회귀 테스트 불가능, 안전한 리팩토링 불가능
 
-**조치 방법**: [TESTING_GUIDE.md](TESTING_GUIDE.md) 참조
+**조치 방법**: [testing-guide.md](testing-guide.md) 참조
 
 ---
 
@@ -109,7 +109,7 @@ spring.datasource.url=60.196.69.234:20000  # 실제 IP 노출
 - [x] 성능 최적화
 - **목표 점수**: 9.5/10
 
-상세한 체크리스트는 [IMPROVEMENT_CHECKLIST.md](IMPROVEMENT_CHECKLIST.md)를 참조하세요.
+상세한 체크리스트는 [improvement-checklist.md](improvement-checklist.md)를 참조하세요.
 
 ---
 
@@ -118,24 +118,24 @@ spring.datasource.url=60.196.69.234:20000  # 실제 IP 노출
 ### 1. 처음 읽어야 할 문서
 
 **담당자가 처음이라면**:
-1. **[CODE_QUALITY_REPORT.md](CODE_QUALITY_REPORT.md)** - 전체 현황 파악
-2. **[IMPROVEMENT_CHECKLIST.md](IMPROVEMENT_CHECKLIST.md)** - 실행 계획 수립
+1. **[code-quality-report.md](code-quality-report.md)** - 전체 현황 파악
+2. **[improvement-checklist.md](improvement-checklist.md)** - 실행 계획 수립
 
 ### 2. 역할별 추천 문서
 
 **보안 담당자**:
-- [SECURITY_IMPROVEMENTS.md](SECURITY_IMPROVEMENTS.md) - 보안 취약점 해결 방법
+- [security-improvements.md](security-improvements.md) - 보안 취약점 해결 방법
 
 **테스트 담당자**:
-- [TESTING_GUIDE.md](TESTING_GUIDE.md) - 테스트 환경 구축 및 작성 방법
+- [testing-guide.md](testing-guide.md) - 테스트 환경 구축 및 작성 방법
 
 **프로젝트 관리자**:
-- [CODE_QUALITY_REPORT.md](CODE_QUALITY_REPORT.md) - 종합 현황
-- [IMPROVEMENT_CHECKLIST.md](IMPROVEMENT_CHECKLIST.md) - 진행 상황 추적
+- [code-quality-report.md](code-quality-report.md) - 종합 현황
+- [improvement-checklist.md](improvement-checklist.md) - 진행 상황 추적
 
 **개발자**:
 - 모든 문서 읽기 권장
-- [IMPROVEMENT_CHECKLIST.md](IMPROVEMENT_CHECKLIST.md)에서 할당된 작업 확인
+- [improvement-checklist.md](improvement-checklist.md)에서 할당된 작업 확인
 
 ---
 
@@ -146,34 +146,34 @@ spring.datasource.url=60.196.69.234:20000  # 실제 IP 노출
 1. **우수한 아키텍처 설계**
    - REST → Service → Persistence 계층 명확히 분리
    - 986개 파일을 체계적으로 구조화
-   - 참고: [CODE_QUALITY_REPORT.md - 섹션 1](CODE_QUALITY_REPORT.md#1-프로젝트-구조-분석)
+   - 참고: [code-quality-report.md - 섹션 1](code-quality-report.md#1-프로젝트-구조-분석)
 
 2. **디자인 패턴 활용**
    - Facade, Dispatcher, Strategy, Template Method 패턴
    - 플러거블 구조로 확장성 확보
-   - 참고: [CODE_QUALITY_REPORT.md - 섹션 2.2](CODE_QUALITY_REPORT.md#22-디자인-패턴-활용)
+   - 참고: [code-quality-report.md - 섹션 2.2](code-quality-report.md#22-디자인-패턴-활용)
 
 3. **ORM 기반 안전한 DB 접근**
    - SQL Injection 방어 (8/10)
    - PreparedStatement 자동 사용
-   - 참고: [CODE_QUALITY_REPORT.md - 섹션 3.4](CODE_QUALITY_REPORT.md#34-sql-injection-방어)
+   - 참고: [code-quality-report.md - 섹션 3.4](code-quality-report.md#34-sql-injection-방어)
 
 ### 약점 분석 (개선할 점)
 
 1. **보안 취약점**
    - commons-collections RCE (CVE-2015-7501)
    - 민감 정보 평문 저장
-   - 해결 방법: [SECURITY_IMPROVEMENTS.md](SECURITY_IMPROVEMENTS.md)
+   - 해결 방법: [security-improvements.md](security-improvements.md)
 
 2. **테스트 코드 부재**
    - 코드 커버리지 0%
    - 품질 보증 불가
-   - 해결 방법: [TESTING_GUIDE.md](TESTING_GUIDE.md)
+   - 해결 방법: [testing-guide.md](testing-guide.md)
 
 3. **미완성 구현**
    - TODO/FIXME 주석 20개+
    - Auto-generated stub 존재
-   - 해결 방법: [IMPROVEMENT_CHECKLIST.md - Phase 3.2](IMPROVEMENT_CHECKLIST.md#32-미완성-코드-완성)
+   - 해결 방법: [improvement-checklist.md - Phase 3.2](improvement-checklist.md#32-미완성-코드-완성)
 
 ---
 
@@ -183,13 +183,13 @@ spring.datasource.url=60.196.69.234:20000  # 실제 IP 노출
 
 - **프로젝트 개요**: [CLAUDE.md](../../CLAUDE.md)
 - **아키텍처**: [docs/architecture/backend-architecture.md](../architecture/backend-architecture.md)
-- **배포 가이드**: [docs/DOCKER.md](../DOCKER.md)
+- **배포 가이드**: [docs/operations/backend-docker.md](../operations/backend-docker.md)
 
 ### 추가 질문
 
 품질 개선 관련 추가 질문이 있으시면:
 1. 해당 문서의 관련 섹션을 먼저 확인
-2. [IMPROVEMENT_CHECKLIST.md](IMPROVEMENT_CHECKLIST.md)에서 체크리스트 확인
+2. [improvement-checklist.md](improvement-checklist.md)에서 체크리스트 확인
 3. 팀 리드 또는 프로젝트 관리자에게 문의
 
 ---
@@ -203,7 +203,7 @@ spring.datasource.url=60.196.69.234:20000  # 실제 IP 노출
 **Phase 3 (품질)**: ⬜ 0% (미착수)
 **Phase 4 (고급)**: ⬜ 0% (미착수)
 
-상세한 진행 상황은 [IMPROVEMENT_CHECKLIST.md](IMPROVEMENT_CHECKLIST.md)에서 확인하세요.
+상세한 진행 상황은 [improvement-checklist.md](improvement-checklist.md)에서 확인하세요.
 
 ---
 
@@ -231,7 +231,7 @@ export JASYPT_ENCRYPTOR_PASSWORD="your-secret-key"
 ./gradlew clean build
 ```
 
-상세한 가이드는 [SECURITY_IMPROVEMENTS.md](SECURITY_IMPROVEMENTS.md)를 참조하세요.
+상세한 가이드는 [security-improvements.md](security-improvements.md)를 참조하세요.
 
 ---
 

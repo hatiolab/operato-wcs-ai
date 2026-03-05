@@ -783,8 +783,8 @@ Groovy/JRuby 스크립트를 통한 런타임 로직 확장 가능.
 | 문서 | 경로 |
 |------|------|
 | CLAUDE.md | `/CLAUDE.md` |
-| Docker 배포 가이드 | `/docs/DOCKER.md` |
-| ECS 모듈 기능 정의 | `/docs/requirements/ECS-모듈-기능정의.md` |
+| Docker 배포 가이드 | `/docs/docker.md` |
+| ECS 모듈 기능 정의 | `/docs/requirements/ecs-module-feature-definition.md` |
 | 프로젝트 구조 | `/CLAUDE.md#프로젝트-구조` |
 
 ---

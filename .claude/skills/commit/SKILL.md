@@ -90,8 +90,8 @@ git log -1 --stat
 ```
 Add WCS function definition documents
 
-- Create WCS-기능정의.md (Manager features)
-- Create ECS-모듈-기능정의.md (4 ECS modules)
+- Create wcs-feature-definition.md (Manager features)
+- Create ecs-module-feature-definition.md (4 ECS modules)
 
 Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
 ```

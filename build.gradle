@@ -103,7 +103,7 @@ dependencies {
 	implementation group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
 	implementation group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.21'
 	
-	implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.4'
+	implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.5'
 	implementation group: 'org.apache.groovy', name: 'groovy-jsr223', version: '5.0.0-alpha-4'
 	//implementation group: 'org.codehaus.groovy', name: 'groovy-all', version: '3.0.20'
 	implementation group: 'com.sun.script.jruby', name: 'jruby-engine', version: '1.1.7'

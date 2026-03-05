@@ -1029,8 +1029,8 @@ CREATE TABLE job_batches (
 
 ## 11. 참고 문서
 
-- [operato-wcs-development-plan.md](../plans/operato-wcs-development-plan.md) — 프로젝트 개발 계획서
-- [operato-wcs-wbs.md](../plans/operato-wcs-wbs.md) — WBS (Work Breakdown Structure)
+- [development-plan.md](../plans/development-plan.md) — 프로젝트 개발 계획서
+- [wbs.md](../plans/wbs.md) — WBS (Work Breakdown Structure)
 - [CLAUDE.md](/Users/shortstop/Git/operato-wcs-ai/CLAUDE.md) — 프로젝트 컨벤션
 
 ---
