@@ -1,7 +1,7 @@
 # Simple Dockerfile for pre-built JAR
 # Use this if you already have the JAR file built locally
 
-FROM eclipse-temurin:18-jre
+FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 

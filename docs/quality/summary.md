@@ -1,174 +1,69 @@
-# 코드 품질 분석 결과 요약
+# 코드 품질 분석 요약
 
-**분석 일자**: 2026-03-01
-**전체 평점**: **7.5/10** (중상 수준)
-
----
-
-## 📊 종합 평가
-
-### 항목별 점수
-
-| 항목 | 점수 | 등급 | 상태 |
-|------|:----:|:----:|:----:|
-| 프로젝트 구조 | 8.0 | A | ✅ |
-| 코드 품질 | 7.0 | B+ | ✅ |
-| SOLID 원칙 | 7.5 | B+ | ✅ |
-| 디자인 패턴 | 8.0 | A | ✅ |
-| 에러 처리 | 8.0 | A | ✅ |
-| 로깅 | 7.0 | B+ | ⚠️ |
-| Spring Boot 설정 | 6.5 | B | ⚠️ |
-| **보안 설정** | **5.0** | **C+** | **🔴** |
-| **의존성 관리** | **6.0** | **C+** | **🔴** |
-| 인증/인가 | 6.0 | C+ | ⚠️ |
-| SQL Injection 방어 | 8.0 | A | ✅ |
-| XSS 방어 | 7.0 | B+ | ✅ |
-| **테스트 코드** | **1.0** | **F** | **🔴** |
-| 문서화 | 7.0 | B+ | ✅ |
-| **평균** | **7.0** | **B** | **⚠️** |
+> 분석일: 2026-03-05 | 최종 수정: 2026-03-05 | 종합 점수: **6.6/10** (개선 전 5.7)
 
 ---
 
-## ✅ 주요 강점 (Top 5)
+## 종합 평가
 
-| 순위 | 강점 | 점수 |
-|:----:|------|:----:|
-| 🥇 | 우수한 계층화 아키텍처 (REST → Service → Persistence) | 9/10 |
-| 🥈 | 디자인 패턴 활용 (Facade, Dispatcher, Strategy) | 8/10 |
-| 🥉 | 모듈화 구조 (기능별 패키지 분리) | 8/10 |
-| 4 | ORM 기반 안전한 DB 접근 (SQL Injection 방어) | 8/10 |
-| 5 | 상세한 아키텍처 문서 | 8/10 |
-
----
-
-## 🚨 심각한 문제 (Top 5)
-
-| 순위 | 문제 | 심각도 | 현재 상태 |
-|:----:|------|:------:|:--------:|
-| 🔴 1 | commons-collections RCE 취약점 (CVE-2015-7501) | Critical | 미해결 |
-| 🔴 2 | fastjson Deserialization RCE 취약점 | Critical | 미해결 |
-| 🔴 3 | 민감 정보 평문 저장 (DB/Email/MQ 자격증명) | Critical | 미해결 |
-| 🔴 4 | 테스트 코드 전무 (코드 커버리지 0%) | Critical | 미해결 |
-| 🟠 5 | TODO/FIXME 주석 20개+ (미완성 구현) | High | 미해결 |
+| 카테고리 | 점수 | 상태 |
+|----------|------|------|
+| 아키텍처 | 8/10 | 양호 |
+| 코드 품질 | 6/10 | 개선 필요 |
+| 보안 | 9/10 | FastJSON·iText 제거, Deprecated 설정 정리, Shutdown 제한 완료 |
+| 테스트 | 2/10 | 프레임워크 구성 완료, 테스트 작성 필요 |
+| 유지보수성 | 6/10 | 대형 클래스 리팩토링 필요 |
+| 문서화 | 7/10 | API 문서 미작성 |
+| 의존성 관리 | 8/10 | 미사용 제거, BOM 관리 전환, 의존성 그룹 정리 완료 |
 
 ---
 
-## ⏱️ 즉시 조치 필요 (1주 이내)
+## 주요 수치
 
-### 1. 보안 취약점 라이브러리 업그레이드
-
-```gradle
-// ❌ 제거
-- commons-collections:3.2.2     (RCE 취약점)
-- fastjson:1.2.47              (RCE 취약점)
-- commons-dbcp:1.4             (2011년 버전)
-
-// ✅ 대체
-+ commons-collections4:4.4
-+ fastjson:1.2.83+ (또는 Jackson 사용)
-+ HikariCP (Spring Boot 내장)
-```
-
-### 2. 민감 정보 암호화
-
-```properties
-# ❌ 현재
-spring.datasource.password=anythings
-mail.smtp.password=1q2w3e4r~!
-
-# ✅ 변경
-spring.datasource.password=ENC(암호화된_값)
-mail.smtp.password=ENC(암호화된_값)
-```
-
-### 3. Spring Security 권한 검증
-
-```java
-// ❌ 현재
-http.authorizeHttpRequests()
-    .anyRequest().permitAll();  // 모든 요청 허용
-
-// ✅ 변경
-http.authorizeHttpRequests()
-    .requestMatchers("/rest/login").permitAll()
-    .requestMatchers("/rest/**").authenticated()
-    .anyRequest().denyAll();
-```
+- Java 파일: **470개** (약 81,000 LOC)
+- REST Controller: **53개**
+- Service 클래스: **212개**
+- God Class (1,000줄+): **2개**
+- @Autowired 필드 주입: **268건** (생성자 주입 0건)
+- 단위 테스트: **0개**
 
 ---
 
-## 📅 단계별 개선 계획
+## 강점
 
-### Phase 1: 보안 (1주)
-- ✅ 취약 라이브러리 업그레이드
-- ✅ 민감 정보 암호화
-- ✅ Spring Security 강화
-- **목표 점수**: 8.0/10
-
-### Phase 2: 테스트 (1개월)
-- ✅ 테스트 환경 구축
-- ✅ Service 계층 테스트 (50% 커버리지)
-- ✅ REST API 통합 테스트
-- **목표 점수**: 8.5/10
-
-### Phase 3: 품질 (3개월)
-- ✅ 로깅 강화
-- ✅ TODO/FIXME 해결
-- ✅ Swagger 문서화
-- ✅ 80% 커버리지
-- **목표 점수**: 9.0/10
-
-### Phase 4: 고급 (6개월)
-- ✅ Prometheus/Grafana 모니터링
-- ✅ SonarQube 정적 분석
-- ✅ CI/CD 파이프라인
-- **목표 점수**: 9.5/10
+1. **레이어드 아키텍처** — Controller/Service/QueryManager 계층이 일관적
+2. **이벤트 기반 설계** — 42개 이벤트 핸들러로 느슨한 결합 구현
+3. **SQL Injection 방지** — 모든 쿼리가 파라미터화
+4. **모듈화** — 설비 유형별 독립 모듈 구조 (DAS, DPS, DPC, SMS 등)
+5. **REST API 일관성** — 표준 CRUD 패턴, 페이징, 응답 형식 통일
 
 ---
 
-## 📈 예상 점수 추이
+## 완료된 개선 사항 (2026-03-05)
 
-```
-현재    7.5/10  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 75%
- ↓ (1주)
-보안    8.0/10  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80%
- ↓ (1개월)
-테스트  8.5/10  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85%
- ↓ (3개월)
-품질    9.0/10  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90%
- ↓ (6개월)
-고급    9.5/10  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95%
-```
+1. ~~취약 라이브러리~~ — FastJSON 1.2.47 제거, iText 4.2.2 제거, Groovy 안정 버전(4.0.24) 교체
+2. ~~미사용 라이브러리 제거~~ — Hutool, Barbecue, JAXB/javax.activation, spring-core 명시 선언 제거
+3. ~~테스트 프레임워크 구성~~ — `src/test/java` 생성 및 `spring-boot-starter-test` 추가
+4. ~~Deprecated 설정 제거~~ — multipart, endpoints, 보안 설정 마이그레이션 완료
+5. ~~Docker Java 버전~~ — eclipse-temurin:18 → 17 통일
+6. ~~Shutdown 엔드포인트~~ — 프로덕션 기본 비활성화, dev에서만 활성화
+7. ~~PostgreSQL 드라이버~~ — 42.7.1 → 42.7.4 업데이트
+8. ~~Batik 업그레이드~~ — 1.14 → 1.17 (batik-dom, batik-svggen, batik-bridge)
+9. ~~BOM 관리 전환~~ — jackson-core, aspectjweaver, gson 버전 명시 제거
+10. ~~빌드 정리~~ — 중복 `configurations.all` 제거, 의존성 논리적 그룹 정리
+
+## 남은 즉시 조치 항목
+
+1. **핵심 서비스 단위 테스트 작성** — DasAssortService, DpcPickingService
+2. **Commons Collections 4.x 업그레이드** — otarepo-core DBIST 코드 수정 필요
 
 ---
 
-## 📚 상세 문서
+## 상세 문서
 
-| 문서 | 용도 |
+| 문서 | 내용 |
 |------|------|
-| [code-quality-report.md](code-quality-report.md) | 📊 종합 품질 분석 보고서 (23KB) |
-| [security-improvements.md](security-improvements.md) | 🔒 보안 개선 가이드 (8KB) |
-| [testing-guide.md](testing-guide.md) | ✅ 테스트 작성 가이드 (17KB) |
-| [improvement-checklist.md](improvement-checklist.md) | ✔️ 개선 체크리스트 (22KB) |
-| [README.md](README.md) | 📖 문서 인덱스 (7KB) |
-
----
-
-## 🎯 핵심 메시지
-
-### 긍정적 측면
-- **견고한 아키텍처**: 엔터프라이즈급 시스템으로 설계됨
-- **확장 가능한 구조**: 플러거블 모듈 구조로 신규 설비 추가 용이
-- **체계적인 패키지 구성**: 986개 파일을 잘 관리
-
-### 개선 필요 사항
-- **보안 취약점 즉시 해결 필수**: RCE 취약점으로 시스템 장악 위험
-- **테스트 코드 작성 시급**: 품질 보증 및 회귀 테스트 불가
-- **민감 정보 암호화 필수**: Git 저장소 유출 위험
-
-### 최종 결론
-> Operato WCS 백엔드는 우수한 아키텍처를 보유하고 있으나, **보안 취약점**과 **테스트 부재**는 프로덕션 배포 전 반드시 해결해야 할 심각한 문제입니다. 단계적 개선을 통해 **9점대의 견고한 시스템**으로 발전할 수 있습니다.
-
----
-
-**다음 단계**: [improvement-checklist.md](improvement-checklist.md)에서 Phase 1 시작
+| [code-quality-report.md](code-quality-report.md) | 코드 규모, 패키지 구조, 품질 이슈 상세 |
+| [security-improvements.md](security-improvements.md) | 보안 취약점 및 개선 방법 |
+| [testing-guide.md](testing-guide.md) | 테스트 전략 및 작성 가이드 |
+| [improvement-checklist.md](improvement-checklist.md) | 우선순위별 개선 체크리스트 |

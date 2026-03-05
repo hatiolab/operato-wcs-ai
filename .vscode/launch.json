@@ -6,6 +6,7 @@
             "name": "WCS (dev)",
             "request": "launch",
             "mainClass": "operato.logis.OperatoWcsBootApplication",
+            "projectName": "operato-wcs-ai",
             "args": "--spring.profiles.active=dev"
         }
     ]

@@ -6,6 +6,9 @@
 		{
 			"path": "../otarepo-core",
 			"name": "otarepo-core"
+		},
+		{
+			"path": "../operato-wms-ai"
 		}
 	],
 	"settings": {
