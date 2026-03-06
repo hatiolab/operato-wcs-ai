@@ -182,13 +182,20 @@ public class MqSender extends MqCommon {
 	public void send(String virtualHost, String stageCd, MessageProperties msgProp, IMessageBody msgBody) {
 		MessageObject message = new MessageObject();
 		message.setProperties(msgProp);
-		
+
 		if (ValueUtil.isNotEmpty(msgBody)) {
 			message.setBody(msgBody);
 		}
 
 		String value = MwMessageUtil.messageObjectToJson(message);
 		String stageQueueName = this.getStageQueueName(virtualHost, stageCd);
+
+		if (this.logger.isDebugEnabled()) {
+			String msgType = (msgBody != null) ? msgBody.getClass().getSimpleName() : "null";
+			this.logger.debug("[MQ-SEND] vhost={}, stage={}, dest={}, type={}, msgId={}",
+					virtualHost, stageCd, msgProp.getDestId(), msgType, msgProp.getId());
+		}
+
 		this.mwSystemClient.sendMessage(virtualHost, stageQueueName, msgProp.getDestId(), value);
 	}
 

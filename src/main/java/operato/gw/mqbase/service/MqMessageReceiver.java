@@ -136,8 +136,17 @@ public class MqMessageReceiver extends MqCommon {
 		// 4. 스레드 로컬 변수에서 currentDomain 설정
 		DomainContext.setCurrentDomain(siteDomain);
 		try {
+			boolean isReply = ValueUtil.toBoolean(msgObj.getProperties().getIsReply());
+
+			if (this.logger.isDebugEnabled()) {
+				String action = (msgObj.getBody() != null) ? msgObj.getBody().getAction() : "unknown";
+				this.logger.debug("[MQ-RECV] vhost={}, stage={}, source={}, action={}, isReply={}, msgId={}",
+						vHost, event.getStageCd(), msgObj.getProperties().getSourceId(),
+						action, isReply, msgObj.getProperties().getId());
+			}
+
 			// 5. 요청한 메시지에 대한 응답 (즉 ACK)에 대한 처리.
-			if (ValueUtil.toBoolean(msgObj.getProperties().getIsReply())) {
+			if (isReply) {
 				this.handleReplyMessage(siteDomain, event.getStageCd(), msgObj);
 			// 6. 타 시스템 혹은 장비에서 서버에 요청 메시지에 대한 처리.
 			} else {
@@ -145,9 +154,11 @@ public class MqMessageReceiver extends MqCommon {
 			}
 		} catch (Exception e) {
 			// 7. 예외 처리
+			this.logger.error("[MQ-RECV] Error processing message: vhost={}, msgId={}",
+					vHost, msgObj.getProperties().getId(), e);
 			MwErrorEvent errorEvent = new MwErrorEvent(Domain.systemDomain().getId(), event, e, true, true);
 			this.eventPublisher.publishEvent(errorEvent);
-			
+
 		} finally {
 			// 8. 스레드 로컬 변수에서 currentDomain 리셋 
 			DomainContext.unsetAll();
@@ -257,6 +268,9 @@ public class MqMessageReceiver extends MqCommon {
 	 * @param msgObj
 	 */
 	private void handleUnkownMessage(Domain siteDomain, MessageObject msgObj) {
+		String action = (msgObj.getBody() != null) ? msgObj.getBody().getAction() : "null";
+		this.logger.warn("[MQ-RECV] Unknown action received: action={}, source={}, msgId={}",
+				action, msgObj.getProperties().getSourceId(), msgObj.getProperties().getId());
 		throw new ElidomRuntimeException("Unknown type Message Received");
 	}
 

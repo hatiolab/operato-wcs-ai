@@ -126,10 +126,11 @@ module/
 
 ### 4.5 로깅
 
-- SLF4J 로거 초기화: 14개 클래스에서만 확인
+- SLF4J 로거 초기화: 14개 클래스에서만 확인 → 18개로 증가
 - 대부분의 서비스 메서드에 로깅이 부재
 - 예외 throw에 의존하여 에러 추적
-- RabbitMQ 송수신 로깅 미흡
+- ~~RabbitMQ 송수신 로깅 미흡~~ → ✅ MqSender(송신 DEBUG), MqMessageReceiver(수신 DEBUG/ERROR/WARN) 추가 완료
+- ~~API 응답 시간 측정 없음~~ → ✅ `ApiLoggingInterceptor`로 `/rest/**` 전체 응답 시간 측정 (1초 이상 WARN)
 - 권장: 서비스 레이어에 DEBUG/INFO 레벨 로깅 추가
 
 ### 4.6 기타 양호 항목
@@ -244,8 +245,8 @@ List<Order> orders = queryManager.selectList(Order.class, condition);
 | 코드 품질 | 6/10 | God Class, 장문 메서드, 필드 주입 문제 |
 | 보안 | 9/10 | SQL Injection 방지 양호, FastJSON·iText 제거 완료 |
 | 테스트 | 2/10 | 프레임워크 구성 완료, 테스트 작성 필요 |
-| 유지보수성 | 6/10 | 모듈화 양호, 대형 클래스 리팩토링 필요 |
-| 문서화 | 7/10 | 메서드 수준 주석 양호, API 문서 미작성 |
+| 유지보수성 | 7/10 | API 로깅·MQ 로깅 추가, 대형 클래스 리팩토링 필요 |
+| 문서화 | 8/10 | 메서드 수준 주석 양호, 모듈별 API 명세 작성 완료 |
 | 의존성 관리 | 8/10 | 미사용 제거, BOM 관리 전환, 의존성 그룹 정리 완료 |
 
-**종합 점수: 6.6 / 10** (개선 전 5.7)
+**종합 점수: 6.9 / 10** (개선 전 5.7)

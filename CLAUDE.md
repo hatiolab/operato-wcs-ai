@@ -236,7 +236,13 @@ docs/
 │   └── messaging-specification.md               # RabbitMQ 메시지 인터페이스 명세 (WCS↔ECS)
 │
 ├── implementation/
-│   └── coding-conventions.md                    # Java·프론트엔드 코딩 컨벤션
+│   ├── coding-conventions.md                    # Java·프론트엔드 코딩 컨벤션
+│   └── api/                                     # 모듈별 API 명세
+│       ├── base-api.md                          # Base 모듈 API 목록
+│       ├── bms-api.md                           # BMS 모듈 API 목록
+│       ├── gw-api.md                            # GW(Gateway) 모듈 API 목록
+│       ├── sms-api.md                           # SMS 모듈 API 목록
+│       └── wcs-api.md                           # WCS 모듈 API 목록
 │
 ├── operations/
 │   ├── backend-docker.md                        # 백엔드 Docker 배포 가이드
