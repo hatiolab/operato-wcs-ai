@@ -1,0 +1,54 @@
+# Gradle 빌드 산출물
+.gradle/
+build/
+bin/
+gradle/
+gradlew
+gradlew.bat
+
+# IDE 설정
+.classpath
+.project
+.settings/
+.idea/
+.vscode/
+*.iml
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 로그
+*.log
+logs/
+velocity.log
+
+# 참조 자료 (PDF, 동영상, Excel)
+ref/
+
+# 프론트엔드 빌드 산출물
+node_modules/
+client/dist/
+client/.vite/
+
+# Docker 설정
+Dockerfile
+Dockerfile.simple
+.dockerignore
+
+# 환경 파일
+.env
+.env.*
+*.key
+*.pem
+
+# 임시 파일
+*.tmp
+*.swp
+*.bak
+*.jar
+*.war
+
+# 작업 로그
+.ai/

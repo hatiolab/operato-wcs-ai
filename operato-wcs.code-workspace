@@ -8,7 +8,8 @@
 			"name": "otarepo-core"
 		},
 		{
-			"path": "../operato-wcs-ai"
+			"path": "../operato-logis-ui",
+			"name": "operato-wcs-app (frontend)"
 		}
 	],
 	"settings": {
