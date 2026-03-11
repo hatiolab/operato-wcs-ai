@@ -1,0 +1,43 @@
+import { Resolver, Query, FieldResolver, Root, Args, Arg, Ctx, Directive } from 'type-graphql'
+import { getRepository } from 'typeorm'
+import { Domain, ListParam, convertListParams } from '@things-factory/shell'
+import { User } from '@things-factory/auth-base'
+import { {{pascalCase name}} } from './{{name}}'
+import { {{pascalCase name}}List } from './{{name}}-type'
+
+@Resolver({{pascalCase name}})
+export class {{pascalCase name}}Query {
+  @Query(returns => {{pascalCase name}}, { description: 'To fetch a {{pascalCase name}}' })
+  async {{camelCase name}}(@Arg('id') id: string, @Ctx() context: any): Promise<{{pascalCase name}}> {
+    const { domain } = context.state
+
+    return await getRepository({{pascalCase name}}).findOne({
+      where: { domain, id }
+    })
+  }
+
+  @Query(returns => {{pascalCase name}}List, { description: 'To fetch multiple {{pluralPascalCase name}}' })
+  async {{pluralCamelCase name}}(@Args() params: ListParam, @Ctx() context: any): Promise<{{pascalCase name}}List> {
+    const { domain } = context.state
+
+    const convertedParams = convertListParams(params, domain.id)
+    const [items, total] = await getRepository({{pascalCase name}}).findAndCount(convertedParams)
+
+    return { items, total }
+  }
+
+  @FieldResolver(type => Domain)
+  async domain(@Root() {{camelCase name}}: {{pascalCase name}}): Promise<Domain> {
+    return await getRepository(Domain).findOne({{camelCase name}}.domainId)
+  }
+
+  @FieldResolver(type => User)
+  async updater(@Root() {{camelCase name}}: {{pascalCase name}}): Promise<User> {
+    return await getRepository(User).findOne({{camelCase name}}.updaterId)
+  }
+
+  @FieldResolver(type => User)
+  async creator(@Root() {{camelCase name}}: {{pascalCase name}}): Promise<User> {
+    return await getRepository(User).findOne({{camelCase name}}.creatorId)
+  }
+}

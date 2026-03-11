@@ -1,0 +1,13 @@
+import { getRepository } from 'typeorm'
+import { {{pascalCase name}} } from '../../../entities'
+
+export const delete{{pascalCase name}} = {
+  async delete{{pascalCase name}}(_: any, { name }, context: any) {
+    const { domain, user } = context.state
+
+    await getRepository({{pascalCase name}}).delete({ domain, name })
+    
+    return true
+  }
+}
+

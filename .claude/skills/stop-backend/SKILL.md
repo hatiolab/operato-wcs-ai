@@ -20,7 +20,7 @@ if [ -z "$PORT" ]; then
     PORT=$(grep "^server.port=" src/main/resources/application.properties | cut -d'=' -f2)
 fi
 
-PORT=${PORT:-8080}
+PORT=${PORT:-9190}
 
 # 해당 포트에서 실행 중인 프로세스 확인
 lsof -i :${PORT}
@@ -32,7 +32,7 @@ lsof -i :${PORT}
 
 - `--port=<port>` 또는 `-p <port>`: 특정 포트의 서버 중지
 - `--all` 또는 `-a`: 모든 관련 프로세스 중지 (Gradle daemon 포함)
-- 인자가 없으면 기본 동작: 프로파일 기반 포트(기본 9500)에서 실행 중인 서버 중지
+- 인자가 없으면 기본 동작: 프로파일 기반 포트(기본 9190)에서 실행 중인 서버 중지
 
 ### 3. 서버 중지
 
@@ -94,11 +94,11 @@ fi
 ## 사용 예시
 
 ```bash
-# 기본 중지 (포트 9500)
+# 기본 중지 (포트 9190)
 /stop-backend
 
 # 특정 포트 서버 중지
-/stop-backend --port=8080
+/stop-backend --port=9190
 
 # 모든 관련 프로세스 중지 (Gradle daemon 포함)
 /stop-backend --all

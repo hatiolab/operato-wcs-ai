@@ -1,0 +1,21 @@
+import gql from 'graphql-tag'
+
+export * from './{{name}}'
+export * from './new-{{name}}'
+export * from './{{name}}-patch'
+export * from './{{name}}-list'
+
+export const {{pascalCase name}}Resolver = gql`
+  extend type Mutation {
+    create{{pascalCase name}} ({{camelCase name}}: New{{pascalCase name}}!): {{pascalCase name}}
+    update{{pascalCase name}} (name: String! patch: {{pascalCase name}}Patch!): {{pascalCase name}}
+    updateMultiple{{pascalCase name}} (patches: [{{pascalCase name}}Patch]!): [{{pascalCase name}}]
+    delete{{pascalCase name}} (name: String!): Boolean
+    delete{{pluralPascalCase name}} (names: [String]!): Boolean
+  }
+
+  extend type Query {
+    {{pluralCamelCase name}}(filters: [Filter], pagination: Pagination, sortings: [Sorting]): {{pascalCase name}}List
+    {{camelCase name}}(name: String!): {{pascalCase name}}
+  }
+`

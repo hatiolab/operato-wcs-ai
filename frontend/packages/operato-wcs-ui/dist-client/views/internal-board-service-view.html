@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <base href="<%= base ? base : '' %>" />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+      #scene {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="scene"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+      var model = <%- JSON.stringify(model) %>;
+      WebFont.load({
+        google: {
+          families: model.fonts || []
+        }
+      })
+    </script>
+    <script src="/node_modules/@hatiolab/things-scene/things-scene-min.js"></script>
+    <script src="/headless-scene-components.js"></script>
+
+    <script>
+      var el = document.getElementById('scene')
+      var s = scene.create({
+        model,
+        mode: 0,
+        refProvider: null //self.provider
+      })
+      s.target = el
+
+      function resize() {
+        s.fit('ratio')
+      }
+
+      resize()
+
+      addEventListener(
+        'resize',
+        function () {
+          if (requestAnimationFrame) {
+            requestAnimationFrame(resize)
+          } else {
+            setTimeout(resize, 66)
+          }
+        },
+        false
+      )
+    </script>
+  </body>
+</html>

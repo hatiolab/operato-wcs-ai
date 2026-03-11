@@ -35,11 +35,11 @@ RUN chown -R spring:spring /app
 USER spring
 
 # Expose default Spring Boot port
-EXPOSE 8080
+EXPOSE 9190
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
-  CMD wget -qO /dev/null http://localhost:8080/actuator/health || exit 1
+  CMD wget -qO /dev/null http://localhost:9190/actuator/health || exit 1
 
 # JVM options for containerized environment
 ENV JAVA_OPTS="-Xmx512m -Xms256m -XX:+UseG1GC -XX:MaxGCPauseMillis=200"

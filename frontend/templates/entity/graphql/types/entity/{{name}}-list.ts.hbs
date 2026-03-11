@@ -1,0 +1,8 @@
+import gql from 'graphql-tag'
+
+export const {{pascalCase name}}List = gql`
+  type {{pascalCase name}}List {
+    items: [{{pascalCase name}}]
+    total: Int
+  }
+`

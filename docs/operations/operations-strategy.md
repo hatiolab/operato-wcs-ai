@@ -89,17 +89,17 @@ docker pull operato-wcs:1.2.0
 docker-compose -f docker-compose.green.yml up -d
 
 # 헬스 체크 (최소 5분 모니터링)
-watch -n 5 'curl -f http://green.internal:9500/actuator/health'
+watch -n 5 'curl -f http://green.internal:9190/actuator/health'
 ```
 
 **Step 2: 스모크 테스트**
 ```bash
 # Green 환경 스모크 테스트
-./scripts/smoke-test.sh green.internal:9500
+./scripts/smoke-test.sh green.internal:9190
 
 # 주요 API 엔드포인트 검증
-curl -X POST http://green.internal:9500/api/orders/receive
-curl -X GET http://green.internal:9500/api/batches
+curl -X POST http://green.internal:9190/api/orders/receive
+curl -X GET http://green.internal:9190/api/batches
 ```
 
 **Step 3: 트래픽 전환 (Nginx)**
@@ -108,8 +108,8 @@ curl -X GET http://green.internal:9500/api/batches
 sudo vi /etc/nginx/conf.d/wcs.conf
 
 # upstream backend {
-#     server blue.internal:9500;   # 기존
-#     server green.internal:9500;  # 신규
+#     server blue.internal:9190;   # 기존
+#     server green.internal:9190;  # 신규
 # }
 
 # Nginx 설정 테스트
@@ -141,7 +141,7 @@ docker-compose -f docker-compose.blue.yml down
 ```bash
 # 1. 즉시 트래픽을 Blue로 복구
 sudo vi /etc/nginx/conf.d/wcs.conf
-# upstream을 blue.internal:9500으로 변경
+# upstream을 blue.internal:9190으로 변경
 sudo nginx -s reload
 
 # 2. Green 환경 로그 수집
@@ -188,7 +188,7 @@ jobs:
           "
 
       - name: Health check
-        run: ./scripts/health-check.sh green.internal:9500
+        run: ./scripts/health-check.sh green.internal:9190
 
       - name: Switch traffic (manual approval)
         uses: trstringer/manual-approval@v1
@@ -475,10 +475,10 @@ tar -xzf /tmp/config_latest.tar.gz -C /opt/operato-wcs/
 docker-compose up -d
 
 # 6. 헬스 체크
-curl -f http://localhost:9500/actuator/health
+curl -f http://localhost:9190/actuator/health
 
 # 7. 스모크 테스트
-./scripts/smoke-test.sh localhost:9500
+./scripts/smoke-test.sh localhost:9190
 ```
 
 ### 4.3 백업 검증
@@ -519,7 +519,7 @@ echo "Backup restore test completed: $(date)" >> /var/log/backup-test.log
   sudo ufw allow 22/tcp    # SSH
   sudo ufw allow 80/tcp    # HTTP
   sudo ufw allow 443/tcp   # HTTPS
-  sudo ufw deny 9500/tcp   # WCS 내부 포트 (외부 차단)
+  sudo ufw deny 9190/tcp   # WCS 내부 포트 (외부 차단)
   sudo ufw enable
   ```
 
@@ -945,7 +945,7 @@ grep -i error /var/log/wcs/application.log | tail -20
 
 # 4. 주요 메트릭 확인
 echo "4. 주요 메트릭"
-curl -s http://localhost:9500/actuator/metrics/http.server.requests | jq .
+curl -s http://localhost:9190/actuator/metrics/http.server.requests | jq .
 
 # 5. 백업 상태 확인
 echo "5. 백업 상태"
@@ -1069,7 +1069,7 @@ spring:
 
 # 헬스 체크 실패 시 자동 재시작
 while true; do
-    if ! curl -f http://localhost:9500/actuator/health > /dev/null 2>&1; then
+    if ! curl -f http://localhost:9190/actuator/health > /dev/null 2>&1; then
         echo "[$(date)] Health check failed, restarting..."
         docker restart operato-wcs
 

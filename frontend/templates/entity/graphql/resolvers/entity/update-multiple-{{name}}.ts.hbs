@@ -1,0 +1,46 @@
+import { getRepository } from 'typeorm'
+import { {{pascalCase name}} } from '../../../entities'
+
+export const updateMultiple{{pascalCase name}} = {
+  async updateMultiple{{pascalCase name}}(_: any, { patches }, context: any) {
+    const { domain, user } = context.state
+    
+    let results = []
+    const _createRecords = patches.filter((patch: any) => patch.cuFlag.toUpperCase() === '+')
+    const _updateRecords = patches.filter((patch: any) => patch.cuFlag.toUpperCase() === 'M')
+    const {{camelCase name}}Repo = getRepository({{pascalCase name}})
+
+    if (_createRecords.length > 0) {
+        for (let i = 0; i < _createRecords.length; i++) {
+          const newRecord = _createRecords[i]
+          
+          const result = await {{camelCase name}}Repo.save({
+            ...newRecord,
+            domain: domain,
+            creator: user,
+            updater: user,
+          })
+          
+          results.push({ ...result, cuFlag: '+' })
+        }
+    }
+
+    if (_updateRecords.length > 0) {
+        for (let i = 0; i < _updateRecords.length; i++) {
+          const newRecord = _updateRecords[i]
+          const {{camelCase name}} = await {{camelCase name}}Repo.findOne({ domain, id: newRecord.id})
+  
+          const result = await {{camelCase name}}Repo.save({
+            ...{{camelCase name}},
+            ...newRecord,
+            updater: user
+          })
+  
+          results.push({ ...result, cuFlag: 'M' })
+        }
+    }
+  
+    return results
+  }
+}
+

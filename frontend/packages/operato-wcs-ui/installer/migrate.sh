@@ -1,0 +1,1 @@
+docker exec -it operato-wcs-ui npm run migration -- --mode=production

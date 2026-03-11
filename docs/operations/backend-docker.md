@@ -20,7 +20,7 @@ docker build -t operato-wcs-ai:latest .
 # 컨테이너 실행
 docker run -d \
   --name operato-wcs \
-  -p 8080:8080 \
+  -p 9190:9190 \
   -e SPRING_PROFILES_ACTIVE=prod \
   operato-wcs-ai:latest
 ```
@@ -47,7 +47,7 @@ docker build -f Dockerfile.simple -t operato-wcs-ai:latest .
 # 3. 컨테이너 실행
 docker run -d \
   --name operato-wcs \
-  -p 8080:8080 \
+  -p 9190:9190 \
   -e SPRING_PROFILES_ACTIVE=prod \
   operato-wcs-ai:latest
 ```
@@ -140,11 +140,11 @@ docker run -v ./config:/app/config ...
 ## 포트 매핑
 
 ```bash
-# 기본 포트 (8080)
-docker run -p 8080:8080 ...
+# 기본 포트 (9190)
+docker run -p 9190:9190 ...
 
 # 다른 포트로 매핑
-docker run -p 9090:8080 ...
+docker run -p 9090:9190 ...
 ```
 
 ## 헬스 체크
@@ -185,7 +185,7 @@ docker run -d \
 docker run -d \
   --name operato-wcs \
   --network wcs-network \
-  -p 8080:8080 \
+  -p 9190:9190 \
   -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/wcs \
   operato-wcs-ai:latest
 ```

@@ -51,3 +51,11 @@ src/test
 .env
 .env.*
 *.env
+
+# Frontend
+frontend/node_modules
+frontend/packages/*/node_modules
+frontend/packages/*/dist
+frontend/packages/*/dist-server
+# Keep dist-client for Nginx serving
+# frontend/packages/*/dist-client

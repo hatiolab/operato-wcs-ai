@@ -1,0 +1,29 @@
+{
+  "name": "@things-factory/{{ name }}",
+  "version": "{{ version }}",
+  "main": "dist-server/index.js",
+  "browser": "client/index.js",
+  "things-factory": true,
+  "license": "MIT",
+  "author": "heartyoh",
+  "description": "{{ description }}",
+  "publishConfig": {
+    "access": "public",
+    "@things-factory:registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hatiolab/things-factory.git",
+    "directory": "packages/{{ name }}"
+  },
+  "scripts": {
+    "build": "tsc --p tsconfig.json",
+    "build:server": "npm run clean:server && tsc",
+    "clean:server": "rm -rf dist-server",
+    "clean": "npm run clean:server",
+    "migration:create": "node ../../node_modules/typeorm/cli.js migration:create -d ./server/migrations"
+  },
+  "dependencies": {
+    "@things-factory/shell": "^{{ version }}"
+  }
+}

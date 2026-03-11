@@ -28,9 +28,11 @@ velocity.log
 ref/
 
 # 프론트엔드 빌드 산출물
-node_modules/
-client/dist/
-client/.vite/
+frontend/node_modules/
+frontend/packages/*/node_modules/
+frontend/packages/*/dist/
+frontend/packages/*/.vite/
+frontend/yarn.lock
 
 # Docker 설정
 Dockerfile

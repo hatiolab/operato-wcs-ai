@@ -1,0 +1,29 @@
+{
+  "name": "@things-factory/operato-wcs-system-ui",
+  "version": "0.0.1",
+  "main": "dist-server/index.js",
+  "browser": "client/index.js",
+  "things-factory": true,
+  "license": "MIT",
+  "author": "heartyoh",
+  "description": "System UI Module for Operato WCS",
+  "publishConfig": {
+    "access": "public",
+    "@things-factory:registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hatiolab/things-factory.git",
+    "directory": "packages/operato-wcs-system-ui"
+  },
+  "scripts": {
+    "build": "tsc --p tsconfig.json",
+    "build:server": "npm run clean:server && tsc",
+    "clean:server": "rm -rf dist-server",
+    "clean": "npm run clean:server",
+    "migration:create": "node ../../node_modules/typeorm/cli.js migration:create -d ./server/migrations"
+  },
+  "dependencies": {
+    "@things-factory/metapage": "^0.0.1"
+  }
+}

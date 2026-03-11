@@ -1,0 +1,46 @@
+import { CreateDateColumn, UpdateDateColumn, Entity, Index, Column, RelationId, OneToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Domain } from '@things-factory/shell'
+import { User } from '@things-factory/auth-base'
+
+@Entity()
+@Index('ix_{{snakeCase name}}_0', ({{camelCase name}}: {{pascalCase name}}) => [{{camelCase name}}.domain, {{camelCase name}}.name], { unique: true })
+export class {{pascalCase name}} {
+  @PrimaryGeneratedColumn('uuid')
+  id: string
+
+  @ManyToOne(type => Domain)
+  domain: Domain
+
+  @RelationId(({{camelCase name}}: {{pascalCase name}}) => {{camelCase name}}.domain)
+  domainId: string
+
+  @Column()
+  name: string
+
+  @Column({
+    nullable: true
+  })
+  description: string
+
+  @CreateDateColumn()
+  createdAt: Date
+  
+  @UpdateDateColumn()
+  updatedAt: Date
+  
+  @ManyToOne(type => User, {
+    nullable: true
+  })
+  creator: User
+
+  @RelationId(({{camelCase name}}: {{pascalCase name}}) => {{camelCase name}}.creator)
+  creatorId: string
+  
+  @ManyToOne(type => User, {
+    nullable: true
+  })
+  updater: User  
+
+  @RelationId(({{camelCase name}}: {{pascalCase name}}) => {{camelCase name}}.updater)
+  updaterId: string
+}

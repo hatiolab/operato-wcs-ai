@@ -32,9 +32,11 @@ logs/
 *.bak
 
 # 프론트엔드
-node_modules/
-client/dist/
-client/.vite/
+frontend/node_modules/
+frontend/packages/*/node_modules/
+frontend/packages/*/dist/
+frontend/packages/*/.vite/
+frontend/yarn.lock
 
 # 환경 파일
 .env

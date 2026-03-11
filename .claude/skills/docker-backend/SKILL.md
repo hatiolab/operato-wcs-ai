@@ -62,7 +62,7 @@ docker build -t operato-wcs-ai:latest .
 # 컨테이너 실행
 docker run -d \
   --name operato-wcs-backend \
-  -p 8080:8080 \
+  -p 9190:9190 \
   -e SPRING_PROFILES_ACTIVE=prod \
   --restart unless-stopped \
   operato-wcs-ai:latest
@@ -90,7 +90,7 @@ docker build -f Dockerfile.simple -t operato-wcs-ai:latest .
 # 3. 컨테이너 실행
 docker run -d \
   --name operato-wcs-backend \
-  -p 8080:8080 \
+  -p 9190:9190 \
   -e SPRING_PROFILES_ACTIVE=prod \
   --restart unless-stopped \
   operato-wcs-ai:latest
@@ -139,7 +139,7 @@ docker ps | grep operato-wcs
 docker logs --tail 50 operato-wcs-backend
 
 # 헬스 체크
-curl -f http://localhost:8080/actuator/health || echo "헬스 체크 실패"
+curl -f http://localhost:9190/actuator/health || echo "헬스 체크 실패"
 ```
 
 ### 6. 결과 보고
@@ -154,12 +154,12 @@ curl -f http://localhost:8080/actuator/health || echo "헬스 체크 실패"
 
 **실행 중인 컨테이너:**
 - operato-wcs-backend — UP (healthy)
-- 포트: 8080:8080
+- 포트: 9190:9190
 - 상태: Running
 
 **접속 정보:**
-- 애플리케이션: http://localhost:8080
-- 헬스 체크: http://localhost:8080/actuator/health
+- 애플리케이션: http://localhost:9190
+- 헬스 체크: http://localhost:9190/actuator/health
 
 **로그 확인:**
 docker logs -f operato-wcs-backend
@@ -239,13 +239,13 @@ docker-compose restart             # 재시작
 ### 포트 충돌
 
 ```
-❌ 포트 8080이 이미 사용 중입니다.
+❌ 포트 9190이 이미 사용 중입니다.
 
 기존 프로세스 확인:
-lsof -i :8080
+lsof -i :9190
 
 또는 다른 포트로 실행:
-docker run -p 9090:8080 ...
+docker run -p 9090:9190 ...
 ```
 
 ### Docker 데몬 미실행
@@ -278,7 +278,7 @@ open -a Docker
    - JAR 파일 경로: `build/libs/operato-wcs-ai.jar`
 
 2. **포트 충돌 확인**
-   - 기본 포트 8080이 사용 중이면 실패
+   - 기본 포트 9190이 사용 중이면 실패
    - docker-compose.yml에서 포트 변경 가능
 
 3. **메모리 요구사항**
@@ -328,7 +328,7 @@ docker logs -f operato-wcs-backend
 /docker-backend
 
 # 2. 헬스 체크
-curl http://localhost:8080/actuator/health
+curl http://localhost:9190/actuator/health
 
 # 3. 모니터링
 docker stats operato-wcs-backend

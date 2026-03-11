@@ -1,0 +1,43 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "outsources/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hatiolab/things-factory.git"
+  },
+  "author": "hatiolab.com",
+  "license": "MIT",
+  "homepage": "https://github.com/hatiolab/things-factory#readme",
+  "scripts": {
+    "publish": "lerna publish",
+    "build": "lerna run build",
+    "build:server": "lerna run build:server",
+    "build:client": "lerna run build:client",
+    "wcs:dev": "yarn workspace @things-factory/operato-wcs-ui serve:dev",
+    "lint": "eslint '**/*.{ts,tsx}'",
+    "lint:changelogs": "node scripts/lint-changelogs.js",
+    "ci:lint-docs": "yarn generate docs && test -z \"$(git status --porcelain)\" || echo 'The root README has not been updated. Run `yarn generate docs` in the root of your things-factory directory and try again.'",
+    "_test": "NODE_ICU_DATA=node_modules/full-icu jest",
+    "pretest": "yarn build",
+    "test": "yarn _test --no-coverage",
+    "test:ci": "yarn _test --maxWorkers=3 --coverage",
+    "check": "lerna run check",
+    "release": "yarn lint:changelogs && lerna publish",
+    "release:force": "yarn lint:changelogs && lerna publish --force-publish=*",
+    "release-beta": "lerna publish --dist-tag beta",
+    "clean": "rimraf './packages/*/dist*' './packages/**/*.tsbuildinfo'",
+    "generate": "plop",
+    "generate:package": "plop package && yarn plop docs && prettier --write \"./packages/tsconfig.json\"",
+    "tophat": "tophat",
+    "docs": "lerna run docs"
+  },
+  "dependencies": {
+    "@operato/data-grist": "1.0.0-beta.10",
+    "@operato/utils": "1.0.0-beta.10"
+  },
+  "devDependencies": {}
+}

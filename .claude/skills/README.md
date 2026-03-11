@@ -102,15 +102,15 @@ Spring Boot 애플리케이션을 로컬 환경에서 실행합니다.
 ```
 
 **접속 정보:**
-- 기본 URL: http://localhost:9500 (프로파일별 properties의 server.port)
-- 헬스 체크: http://localhost:9500/actuator/health
+- 기본 URL: http://localhost:9190 (프로파일별 properties의 server.port)
+- 헬스 체크: http://localhost:9190/actuator/health
 - 디버그 포트: 5005 (디버그 모드 시)
 
 **포트 결정 우선순위:**
 1. `--port` 옵션 (최우선)
 2. `application-{profile}.properties`의 server.port
-3. `application.properties`의 server.port (기본: 9500)
-4. Spring Boot 기본값 (8080)
+3. `application.properties`의 server.port (기본: 9190)
+4. Spring Boot 기본값 (9190)
 
 **참고:**
 - [run-backend/SKILL.md](run-backend/SKILL.md) — 상세 스킬 정의
@@ -122,17 +122,17 @@ Spring Boot 애플리케이션을 로컬 환경에서 실행합니다.
 실행 중인 Spring Boot 백엔드 서버를 안전하게 중지합니다.
 
 **주요 기능:**
-- 프로파일 기반 포트 자동 감지 (기본 9500)
+- 프로파일 기반 포트 자동 감지 (기본 9190)
 - 정상 종료(SIGTERM) 후 미종료 시 강제 종료(SIGKILL)
 - Gradle daemon 포함 전체 중지 옵션
 
 **사용법:**
 ```bash
-# 기본 중지 (포트 9500)
+# 기본 중지 (포트 9190)
 /stop-backend
 
 # 특정 포트 서버 중지
-/stop-backend --port=8080
+/stop-backend --port=9190
 
 # 모든 관련 프로세스 중지 (Gradle daemon 포함)
 /stop-backend --all
@@ -223,7 +223,7 @@ docker logs -f operato-wcs-backend
 /run-backend
 
 # 2. 브라우저/Postman으로 API 테스트
-# http://localhost:9500/api/...
+# http://localhost:9190/api/...
 
 # 3. 코드 수정 후 서버 재시작 (Ctrl+C → /run-backend)
 ```
@@ -251,7 +251,7 @@ docker logs -f operato-wcs-backend
 /run-backend --jar --profile=prod
 
 # 3. 헬스 체크 및 테스트
-curl http://localhost:9500/actuator/health
+curl http://localhost:9190/actuator/health
 ```
 
 ### 시나리오 4: Docker 환경 배포

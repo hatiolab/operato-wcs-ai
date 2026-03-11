@@ -111,7 +111,7 @@ xyz.elidom.print.rest.PrinterController (주석 처리됨)
 **검증**:
 ```bash
 ./gradlew bootRun  # Bean 충돌 오류 사라짐
-curl http://localhost:9500/rest/printers  # API 정상 동작
+curl http://localhost:9190/rest/printers  # API 정상 동작
 ```
 
 ---
@@ -165,7 +165,7 @@ xyz.elidom.print.entity.Printer
 ```bash
 grep -r "xyz.anythings.base.entity.Printer" src/main/java  # 0건
 ./gradlew bootRun
-curl http://localhost:9500/rest/printers  # CRUD 정상 동작
+curl http://localhost:9190/rest/printers  # CRUD 정상 동작
 ```
 
 ---
@@ -452,8 +452,8 @@ javax.activation → jakarta.activation
 ./gradlew bootRun  # 오류 없이 시작되어야 함
 
 # 3. API 동작 확인
-curl http://localhost:9500/rest/printers
-curl http://localhost:9500/actuator/health
+curl http://localhost:9190/rest/printers
+curl http://localhost:9190/actuator/health
 
 # 4. 보안 스캔
 grep -r "password\|secret\|key" src/main/resources/application*.properties

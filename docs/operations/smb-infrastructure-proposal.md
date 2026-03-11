@@ -127,7 +127,7 @@
 - Auto Scaling: 1 → 2개 (피크 타임 자동 확장)
 - EBS Storage: gp3 100GB (OS + 앱)
 - AMI: Amazon Linux 2023
-- Security Group: 22 (SSH), 8080 (앱), 5672 (RabbitMQ)
+- Security Group: 22 (SSH), 9190 (앱), 5672 (RabbitMQ)
 
 ---
 
@@ -733,7 +733,7 @@ sudo systemctl enable prometheus grafana-server
 sudo ufw allow 22/tcp    # SSH
 sudo ufw allow 80/tcp    # HTTP
 sudo ufw allow 443/tcp   # HTTPS
-sudo ufw allow 9500/tcp  # WCS Backend
+sudo ufw allow 9190/tcp  # WCS Backend
 sudo ufw enable
 
 echo "WCS 온프레미스 서버 구성 완료!"

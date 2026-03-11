@@ -7,10 +7,6 @@
 			"path": "../otarepo-core",
 			"name": "otarepo-core"
 		},
-		{
-			"path": "../operato-logis-ui",
-			"name": "operato-wcs-app (frontend)"
-		}
 	],
 	"settings": {
 		"java.configuration.updateBuildConfiguration": "automatic",

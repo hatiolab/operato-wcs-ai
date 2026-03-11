@@ -1,0 +1,51 @@
+import { ObjectType, Field, InputType, Int, ID, registerEnumType } from 'type-graphql'
+
+import { {{pascalCase name}}, {{pascalCase name}}Status } from './{{name}}'
+
+@InputType()
+export class New{{pascalCase name}} {
+  @Field()
+  name: string
+
+  @Field({ nullable: true })
+  description?: string
+
+  @Field(type => {{pascalCase name}}Status, { nullable: true })
+  state?: {{pascalCase name}}Status
+
+  @Field({ nullable: true })
+  active?: boolean
+
+  @Field({ nullable: true })
+  params?: string
+}
+
+@InputType()
+export class {{pascalCase name}}Patch {
+  @Field(type => ID, { nullable: true })
+  id?: string
+
+  @Field({ nullable: true })
+  name?: string
+
+  @Field({ nullable: true })
+  description?: string
+
+  @Field(type => {{pascalCase name}}Status, { nullable: true })
+  state?: {{pascalCase name}}Status
+
+  @Field({ nullable: true })
+  active?: boolean
+
+  @Field()
+  cuFlag: string
+}
+
+@ObjectType()
+export class {{pascalCase name}}List {
+  @Field(type => [{{pascalCase name}}])
+  items: {{pascalCase name}}[]
+
+  @Field(type => Int)
+  total: number
+}

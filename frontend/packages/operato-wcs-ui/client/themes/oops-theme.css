@@ -1,0 +1,26 @@
+body {
+  /* oops spinner style */
+
+  --oops-spinner-image: url(/assets/images/spinner.png);
+
+  /* oops note style */
+  --oops-note-icon-font: normal 24px var(--mdc-icon-font, 'Material Icons');
+  --oops-note-icon-color: rgba(var(--secondary-color-rgb), 0.3);
+  --oops-note-icon-border: 2px solid rgba(var(--secondary-color-rgb), 0.3);
+  --oops-note-icon-border-radius: 50px;
+  --oops-note-icon-padding: var(--padding-default);
+  --oops-note-title-margin: 7px 0 2px 0;
+  --oops-note-title-font: bold 14px var(--theme-font);
+  --oops-note-title-color: var(--secondary-color);
+  --oops-note-description-font: normal 12px var(--theme-font);
+  --oops-note-description-color: var(--primary-color);
+}
+@media only screen and (max-width: 460px) {
+  body {
+    --oops-note-icon-padding: var(--padding-narrow);
+    --oops-note-icon-font: normal 18px var(--mdc-icon-font, 'Material Icons');
+    --oops-note-title-font: bold 13px var(--theme-font);
+    --oops-note-title-margin: var(--margin-narrow) 0 2px 0;
+    --oops-note-description-font: normal 0px var(--theme-font);
+  }
+}

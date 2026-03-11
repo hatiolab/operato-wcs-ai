@@ -1,0 +1,31 @@
+{
+  "name": "@things-factory/operatofill",
+  "version": "0.0.1",
+  "main": "dist-server/index.js",
+  "browser": "client/index.js",
+  "things-factory": true,
+  "license": "MIT",
+  "author": "heartyoh",
+  "description": "Module for Interface with Spring Based Operato Logistics Server",
+  "publishConfig": {
+    "access": "public",
+    "@things-factory:registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hatiolab/things-factory.git",
+    "directory": "packages/operatofill"
+  },
+  "scripts": {
+    "build": "tsc --p tsconfig.json",
+    "build:server": "npm run clean:server && tsc",
+    "clean:server": "rm -rf dist-server",
+    "clean": "npm run clean:server",
+    "migration:create": "node ../../node_modules/typeorm/cli.js migration:create -d ./server/migrations"
+  },
+  "dependencies": {
+    "@operato/i18n": "^1.0.0-beta.4",
+    "@operato/shell": "^1.0.0-beta.4",
+    "@things-factory/shell": "^5.0.0-alpha.36"
+  }
+}

@@ -1,0 +1,9 @@
+package.json
+node_modules
+dist
+dist-server
+dist-client
+coverage
+*.svg
+templates/**/*hbs*
+/README.md

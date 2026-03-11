@@ -1,0 +1,38 @@
+import { html, css } from 'lit-element'
+import { connect } from 'pwa-helpers/connect-mixin.js'
+import { store, PageView } from '@things-factory/shell'
+
+import logo from '../../assets/images/hatiolab-logo.png'
+
+class {{pascalCase name}}Main extends connect(store)(PageView) {
+  static get styles() {
+    return [
+      css`
+        :host {
+          display: flex;          
+        }
+      `
+    ]
+  }
+
+  static get properties() {
+    return {
+      {{camelCase name}}: String
+    }
+  }
+
+  render() {
+    return html`
+      <section>
+        <h2>{{pascalCase name}}</h2>
+        <img src=${logo}>
+      </section>
+    `
+  }
+
+  stateChanged(state) {
+    this.{{camelCase name}} = state.{{camelCase name}}.state_main
+  }
+}
+
+window.customElements.define('{{ name }}-main', {{pascalCase name}}Main)

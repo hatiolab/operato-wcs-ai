@@ -1,0 +1,19 @@
+import { getRepository } from 'typeorm'
+import { {{pascalCase name}} } from '../../../entities'
+
+export const update{{pascalCase name}} = {
+  async update{{pascalCase name}}(_: any, { name, patch }, context: any) {
+    const { domain, user } = context.state
+
+    const repository = getRepository({{pascalCase name}})
+    const {{camelCase name}} = await repository.findOne({ 
+      where: { domain, name }
+    })
+
+    return await repository.save({
+      ...{{camelCase name}},
+      ...patch,
+      updater: user
+    })
+  }
+}

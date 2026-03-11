@@ -1,0 +1,114 @@
+services:
+  # 백엔드 서비스 (Spring Boot)
+  wcs-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: operato-wcs-backend
+    image: operato-wcs-ai:latest
+    expose:
+      - "9190"
+    environment:
+      # Spring Boot configuration
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=9190
+      # Database connection (adjust as needed)
+      # - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/wcs
+      # - SPRING_DATASOURCE_USERNAME=wcs_user
+      # - SPRING_DATASOURCE_PASSWORD=your_password
+      # Redis connection (adjust as needed)
+      # - SPRING_DATA_REDIS_HOST=redis
+      # - SPRING_DATA_REDIS_PORT=6379
+      # RabbitMQ connection (adjust as needed)
+      # - SPRING_RABBITMQ_HOST=rabbitmq
+      # - SPRING_RABBITMQ_PORT=5672
+      # - SPRING_RABBITMQ_USERNAME=guest
+      # - SPRING_RABBITMQ_PASSWORD=guest
+      # JVM options
+      - JAVA_OPTS=-Xmx1g -Xms512m
+    volumes:
+      # Mount logs directory
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - wcs-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:9190/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # 프론트엔드 서비스 (Nginx)
+  wcs-frontend:
+    image: nginx:1.25-alpine
+    container_name: operato-wcs-frontend
+    ports:
+      - "80:80"
+      # HTTPS를 위한 포트 (SSL 인증서 설정 후 사용)
+      # - "443:443"
+    volumes:
+      # Nginx 설정 파일
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      # 프론트엔드 빌드 결과물
+      - ./frontend/packages/operato-wcs-ui/dist-client:/usr/share/nginx/html:ro
+      # Nginx 로그
+      - ./logs/nginx:/var/log/nginx
+      # SSL 인증서 (필요시)
+      # - ./docker/nginx/certs:/etc/nginx/certs:ro
+    depends_on:
+      wcs-backend:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - wcs-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # 데이터베이스 서비스 (필요시 활성화)
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: operato-wcs-mysql
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=root_password
+  #     - MYSQL_DATABASE=wcs
+  #     - MYSQL_USER=wcs_user
+  #     - MYSQL_PASSWORD=your_password
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - mysql-data:/var/lib/mysql
+  #   networks:
+  #     - wcs-network
+
+  # Redis 서비스 (필요시 활성화)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: operato-wcs-redis
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - wcs-network
+
+  # RabbitMQ 서비스 (필요시 활성화)
+  # rabbitmq:
+  #   image: rabbitmq:3-management
+  #   container_name: operato-wcs-rabbitmq
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672"
+  #   environment:
+  #     - RABBITMQ_DEFAULT_USER=guest
+  #     - RABBITMQ_DEFAULT_PASS=guest
+  #   networks:
+  #     - wcs-network
+
+networks:
+  wcs-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

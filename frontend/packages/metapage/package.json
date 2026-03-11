@@ -1,0 +1,45 @@
+{
+  "name": "@things-factory/metapage",
+  "version": "0.0.1",
+  "main": "dist-server/index.js",
+  "browser": "client/index.js",
+  "things-factory": true,
+  "license": "MIT",
+  "author": "heartyoh",
+  "description": "Framework Module for Auto Generate Screen By Menu Meta Data",
+  "publishConfig": {
+    "access": "public",
+    "@things-factory:registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hatiolab/things-factory.git",
+    "directory": "packages/metapage"
+  },
+  "scripts": {
+    "build": "tsc --p tsconfig.json",
+    "build:server": "npm run clean:server && tsc",
+    "clean:server": "rm -rf dist-server",
+    "clean": "npm run clean:server",
+    "migration:create": "node ../../node_modules/typeorm/cli.js migration:create -d ./server/migrations"
+  },
+  "dependencies": {
+    "@operato/data-grist": "^1.0.0-beta.10",
+    "@operato/i18n": "^1.0.0-beta.4",
+    "@operato/layout": "^1.0.0-beta.4",
+    "@operato/popup": "^1.0.0-beta.4",
+    "@operato/shell": "^1.0.0-beta.4",
+    "@operato/styles": "^1.0.0-beta.4",
+    "@operato/utils": "^1.0.0-beta.10",
+    "@things-factory/code-ui": "^5.0.0-alpha.36",
+    "@things-factory/context-ui": "^5.0.0-alpha.36",
+    "@things-factory/dashboard": "^5.0.0-alpha.36",
+    "@things-factory/export-ui": "^5.0.0-alpha.36",
+    "@things-factory/export-ui-excel": "^5.0.0-alpha.36",
+    "@things-factory/grist-ui": "^5.0.0-alpha.36",
+    "@things-factory/help": "^5.0.0-alpha.36",
+    "@things-factory/shell": "^5.0.0-alpha.36",
+    "@things-factory/operatofill": "^0.0.1",
+    "chart.js": "^2.9.4"
+  }
+}

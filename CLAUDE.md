@@ -7,8 +7,6 @@
 > 제품 목표, 라인업, 특장점 등 상세 내용은 [`docs/overview/overview.md`](docs/overview/overview.md) 참조.
 > 시스템 아키텍처는 [`docs/architecture/architecture.md`](docs/architecture/architecture.md), 백엔드 아키텍처는 [`docs/architecture/backend-architecture.md`](docs/architecture/backend-architecture.md) 참조.
 
----
-
 ## 기술 스택
 
 | 구분 | 기술 |
@@ -20,9 +18,7 @@
 | 개발 서버 | Spring Boot 내장 웹 서버 (정적 파일 서빙 포함) |
 | 운영 배포 | Nginx 단독 또는 Nginx 포함 Docker 환경 |
 
----
-
-## 프로젝트 구조 (예정)
+## 프로젝트 구조
 
 ```
 operato-wcs-ai/
@@ -30,10 +26,17 @@ operato-wcs-ai/
 │   ├── main/
 │   │   ├── java/com/operato/wcs/      # Spring Boot 애플리케이션
 │   │   └── resources/
-│   │       ├── static/                # Lit 클라이언트 빌드 결과물 (개발 서빙용)
+│   │       ├── static/                # 정적 파일 (개발 서빙용)
 │   │       └── application.yml
 │   └── test/
-├── client/                            # Lit 클라이언트 소스 (사용자가 채워 넣음)
+├── frontend/                          # Things Factory 기반 프론트엔드 (Lerna 모노레포)
+│   ├── packages/
+│   │   ├── operato-wcs-ui/           # 메인 WCS UI
+│   │   ├── operato-wcs-system-ui/    # 시스템 UI
+│   │   ├── metapage/                 # 메타페이지
+│   │   └── operatofill/              # Spring 백엔드 연동
+│   ├── package.json
+│   └── lerna.json
 ├── docker/
 │   ├── nginx/
 │   │   └── nginx.conf
@@ -45,22 +48,32 @@ operato-wcs-ai/
 └── CLAUDE.md
 ```
 
----
-
 ## 문서 구조
 
 > 문서 디렉토리 구조, 파일 목록, 명명 규칙은 [`docs/README.md`](docs/README.md) 참조.
 > `docs/` 하위에 폴더나 파일이 추가·변경·삭제되면 `docs/README.md`를 함께 업데이트할 것.
 
----
-
 ## 빌드 및 실행 명령어
 
+### 백엔드 (Spring Boot)
 - 빌드: `./gradlew build` | 테스트: `./gradlew test` | 실행: `./gradlew bootRun` | JAR: `./gradlew bootJar`
-- 프론트엔드(`client/`): 구성 확정 후 추가 예정. 구조는 [`docs/architecture/frontend-structure.md`](docs/architecture/frontend-structure.md) 참조.
-- 개발/운영 배포: [`docs/operations/deployment.md`](docs/operations/deployment.md) 참조.
+- 기본 포트: **9190** (개발 환경 `application-dev.properties`)
+- 스킬: `/deploy-backend` (빌드) | `/run-backend` (실행) | `/stop-backend` (중지)
 
----
+### 프론트엔드 (Things Factory)
+```bash
+cd frontend
+yarn install              # 의존성 설치
+yarn build               # 전체 빌드
+yarn build:client        # 클라이언트 빌드
+yarn wcs:dev             # 개발 서버 실행
+```
+- 기본 포트: **5908** (`operato-wcs-ui` 개발 서버)
+- 상세 구조: [`docs/architecture/frontend-structure.md`](docs/architecture/frontend-structure.md)
+
+### 배포
+- 개발/운영 배포: [`docs/operations/deployment.md`](docs/operations/deployment.md) 참조
+- Docker: `/docker-backend` 스킬 또는 `docker-compose up`
 
 ## Git 규칙
 
@@ -83,16 +96,20 @@ operato-wcs-ai/
 - `—` (em dash) 뒤에 상세 설명 추가 가능
 - Co-Authored-By 태그는 Claude Code 작업 시 자동 추가
 
----
-
 ## Claude Code Skills
 
 > 스킬 목록, 사용법, 관리 규칙은 [.claude/skills/README.md](.claude/skills/README.md) 참조.
 > 스킬 추가·수정·삭제 시 해당 README.md를 함께 업데이트할 것.
 
----
+## 포트 구성
+
+| 서비스 | 개발 환경 | 운영 환경 | 설정 위치 |
+|--------|---------|---------|----------|
+| 백엔드 API | **9190** | **9190** | `application-dev.properties` / Docker Compose |
+| 프론트엔드 | **5908** | - | `frontend/packages/operato-wcs-ui/config/config.development.js` |
 
 ## 참고 사항
 
-- 클라이언트 소스(`client/`)는 사용자가 직접 관리하며 Claude가 임의로 수정하지 않음
-- 환경별 설정 분리: `application.yml` / `application-dev.yml` / `application-prod.yml`
+- 프론트엔드 소스(`frontend/`)는 사용자가 직접 관리하며 Claude가 임의로 수정하지 않음
+- 백엔드 환경별 설정 분리: `application.properties` / `application-dev.properties` / `application-prod.properties`
+- 프론트엔드 환경별 설정: `config.development.js` / `config.production.js`

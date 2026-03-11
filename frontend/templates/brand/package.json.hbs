@@ -1,0 +1,42 @@
+{
+  "name": "@things-factory/{{ name }}",
+  "version": "{{ version }}",
+  "main": "dist-server/index.js",
+  "browser": "client/index.js",
+  "license": "MIT",
+  "author": "heartyoh",
+  "description": "{{ description }}",
+  "publishConfig": {
+    "access": "public",
+    "@things-factory:registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hatiolab/things-factory.git",
+    "directory": "packages/{{ name }}"
+  },
+  "scripts": {
+    "serve": "things-factory {{ name }}",
+    "serve:dev": "npm run build:server && things-factory-dev {{ name }}",
+    "build": "tsc --p tsconfig.json",
+    "build:client": "npm run clean:client && webpack --config node_modules/@things-factory/builder/webpack.config.js",
+    "build:server": "npm run clean:server && tsc",
+    "clean:server": "rm -rf dist-server",
+    "clean:client": "rm -rf dist-client",
+    "clean": "npm run clean:server && npm run clean:client",
+    "migration": "npm run build:server && things-factory-migration",
+    "migration:privileges": "npm run build:server && things-factory-migration-privileges",
+    "migration:create": "node node_modules/typeorm/cli.js migration:create -d ./server/migrations",
+    "migration:generate": "node node_modules/typeorm/cli.js migration:generate",
+    "migration:run": "node node_modules/typeorm/cli.js migration:run",
+    "migration:revert": "node node_modules/typeorm/cli.js migration:revert",
+    "stop:dev": "kill $(lsof -t -i:3000,3001)",
+    "stop": "things-factory-stop {{ name }}",
+    "docker": "things-factory-dockerize hatiolab/{{ name }}:latest",
+    "docker:run": "docker run -it -p 4000:3000 hatiolab/{{ name }}:latest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@things-factory/builder": "^{{ version }}"
+  }
+}

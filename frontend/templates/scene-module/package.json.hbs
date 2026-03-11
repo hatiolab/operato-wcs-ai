@@ -1,0 +1,21 @@
+{
+  "name": "@things-factory/{{ name }}",
+  "description": "{{ description }}",
+  "version": "{{ version }}",
+  "things-scene": true,
+  "browser": "src/index.js",
+  "author": "heartyoh",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "@things-factory:registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hatiolab/things-factory.git",
+    "directory": "packages/{{ name }}"
+  },
+  "dependencies": {
+    "@hatiolab/things-scene": "^2.7.33"
+  }
+}

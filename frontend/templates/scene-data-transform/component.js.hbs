@@ -1,0 +1,115 @@
+/*
+ * Copyright © HatioLab Inc. All rights reserved.
+ */
+
+import COMPONENT_IMAGE from './{{ name }}.png';
+
+const NATURE = {
+  mutable: false,
+  resizable: true,
+  rotatable: true,
+  properties: [{
+    type: 'string',
+    label: 'format',
+    name: 'format'
+  }, {
+    type: 'number',
+    label: 'count',
+    name: 'count',
+    placeholder: 1
+  }, {
+    type: 'number',
+    label: 'period',
+    name: 'period',
+    placeholder: 'milli-seconds'
+  }]
+}
+
+import { Component, RectPath, Shape, ScriptLoader, error } from '@hatiolab/things-scene';
+
+export default class {{ pascalCase name }}  extends RectPath(Shape) {
+
+  static get nature() {
+    return NATURE;
+  }
+
+  static get image() {
+    if (!{{ pascalCase name }}._image) {
+      {{ pascalCase name }}._image = new Image()
+      {{ pascalCase name }}._image.src = COMPONENT_IMAGE
+    }
+
+    return {{ pascalCase name }}._image
+  }
+
+  ready() {
+    ScriptLoader.load(['http://chancejs.com/chance.min.js'])
+    .then(() => {
+      if (!this.app.isViewMode)
+        return;
+
+      this._init{{ pascalCase name }}()
+    }, error)
+  }
+
+  dispose() {
+    super.dispose();
+    this._stopRepeater();
+  }
+
+  random() {
+    var {
+      format = 'd100',
+      count = 1
+    } = this.state
+
+    if (!format || !count)
+      return
+
+    this.data = chance.n(chance[format], count)
+  }
+
+  _init{{ pascalCase name }}() {
+    this._stopRepeater();
+    this._startRepeater();
+  }
+
+  _startRepeater() {
+    if (this.getState('period')) {
+      this.repeatTimer = setInterval(function () {
+        this.random();
+      }.bind(this), this.getState('period'));
+    }
+
+    this.random();
+  }
+
+  _stopRepeater() {
+    if (this.repeatTimer)
+      clearTimeout(this.repeatTimer)
+  }
+
+  render(context) {
+    var {
+      left,
+      top,
+      width,
+      height
+    } = this.bounds;
+
+    context.beginPath();
+    this.drawImage(context, {{ pascalCase name }}.image, left, top, width, height);
+  }
+
+  ondblclick(e) {
+    this.random()
+  }
+
+  get hasTextProperty() {
+    return false
+  }
+
+  get controls() { }
+}
+
+Component.register('{{ name }}', {{ pascalCase name }});

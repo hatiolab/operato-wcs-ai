@@ -1,0 +1,123 @@
+body {
+  /* theme color */
+  --primary-color-rgb: 20, 154, 155;
+  --primary-color: rgb(var(--primary-color-rgb));
+  --secondary-color: #3a5877;
+  --focus-color: var(--theme-white-color);
+  --primary-background-color: var(--secondary-color);
+  --secondary-background-color: #283644;
+  --main-section-background-color: #f4f7fb;
+  --theme-white-color: #fff;
+  --theme-black-color: rgba(0, 0, 0, 0.9);
+
+  --focus-background-color: var(--primary-color);
+  --primary-text-color: var(--theme-black-color);
+  --secondary-text-color: #017e7f;
+
+  --opacity-dark-color: rgba(0, 0, 0, 0.4);
+  --opacity-light-color: rgba(255, 255, 255, 0.8);
+
+  /* status color */
+  --status-success-color: #35a24a;
+  --status-warning-color: #ee8d03;
+  --status-danger-color: #d14946;
+  --status-info-color: #267ac0;
+
+  /* common style */
+  --border-radius: 3px;
+  --border-dark-color: 1px solid rgba(0, 0, 0, 0.15);
+  --border-light-color: 1px solid rgba(255, 255, 255, 0.3);
+
+  --content-container-max-width: 1200px;
+
+  --box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.1);
+
+  --theme-font: 'Noto', Helvetica;
+
+  --margin-default: 9px;
+  --margin-narrow: 4px;
+  --margin-wide: 15px;
+  --padding-default: var(--margin-default);
+  --padding-narrow: var(--margin-narrow);
+  --padding-wide: var(--margin-wide);
+
+  --scrollbar-thumb-color: rgba(57, 78, 100, 0.5);
+  --scrollbar-thumb-hover-color: var(--primary-color);
+
+  --fontsize-default: 14px;
+  --fontsize-small: 13px;
+  --fontsize-large: 16px;
+
+  /* app layout style */
+  --app-grid-template-area: 'header header header' 'nav main aside' 'nav footer aside';
+
+  /* title & description style */
+  --title-margin: var(--margin-narrow) 0;
+  --title-font: bold 24px var(--theme-font);
+  --title-text-color: var(--secondary-color);
+  --title-font-mobile: bold 20px var(--theme-font);
+
+  --page-description-margin: var(--margin-narrow) 0 var(--margin-wide) 0;
+  --page-description-font: normal var(--fontsize-default) / 1.2rem var(--theme-font);
+  --page-description-color: var(--secondary-text-color);
+
+  --subtitle-padding: 12px 5px 3px 5px;
+  --subtitle-font: bold 18px var(--theme-font);
+  --subtitle-text-color: var(--secondary-text-color);
+  --subtitle-border-bottom: 1px solid var(--primary-color);
+
+  /* icon style */
+  --icon-tiny-size: 24px;
+  --icon-default-size: 36px;
+  --icon-big-size: 48px;
+  --icon-default-color: #fff;
+
+  /* material design component themes */
+  --mdc-theme-on-primary: white;
+  --mdc-theme-primary: var(--primary-color);
+  --mdc-theme-on-secondary: white;
+  --mdc-theme-secondary: var(--primary-color);
+
+  /* button style */
+  --button-background-color: #fafbfc;
+  --button-border: var(--border-dark-color);
+  --button-border-radius: var(--border-radius);
+  --button-margin: var(--margin-default) var(--margin-default) var(--margin-default) 0;
+  --button-padding: var(--padding-default);
+  --button-color: var(--secondary-color);
+  --button-font: normal 15px var(--theme-font);
+  --button-text-transform: capitalize;
+  --button-active-box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.2);
+  --button-activ-border: 1px solid var(--primary-color);
+
+  --button-primary-background-color: var(--secondary-text-color);
+  --button-primary-active-background-color: var(--status-success-color);
+  --button-primary-padding: var(--margin-default) var(--margin-wide);
+  --button-primary-color: var(--theme-white-color);
+  --button-primary-font: bold 16px var(--theme-font);
+
+  /* table style */
+  --th-padding: var(--padding-narrow);
+  --th-border-top: 3px solid var(--secondary-color);
+  --th-text-transform: capitalize;
+  --th-font: bold 14px var(--theme-font);
+
+  --td-padding: var(--padding-default);
+  --td-font: normal 13px var(--theme-font);
+
+  /* form style */
+  --label-font: normal var(--fontsize-default) var(--theme-font);
+  --label-color: var(--secondary-color);
+  --label-text-transform: capitalize;
+  --input-margin: var(--margin-narrow) 0;
+  --input-padding: var(--padding-default);
+  --input-font: normal var(--fontsize-default) var(--theme-font);
+  --input-hint-font: normal var(--fontsize-small) var(--theme-font);
+  --input-hint-color: #666;
+  --input-container-max-width: 1000px;
+  --fieldset-margin: var(--padding-wide) 0;
+  --fieldset-padding: 0 var(--padding-wide) var(--padding-wide) var(--padding-wide);
+  --legend-padding: var(--padding-default) 0;
+  --legend-color: var(--secondary-text-color);
+  --legend-font: bold 16px var(--theme-font);
+}

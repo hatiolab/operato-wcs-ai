@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <base href="<%= base ? base : '' %>" />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+      div {
+        width: 100%;
+        height: 100%;
+      }
+      ox-board-viewer {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+
+    <script src="/node_modules/@hatiolab/things-scene/things-scene-min.js"></script>
+    <script src="/scene-viewer.js"></script>
+  </head>
+  <body>
+    <div id="scene"></div>
+
+    <script>
+      var model = <%- JSON.stringify(model) %>;
+      WebFont.load({
+        google: {
+          families: model.fonts || []
+        }
+      })
+    </script>
+
+    <script type="module">
+      const { ReferenceMap, create, error } = scene
+      const provider = window.headlessSceneProvider
+
+      const board = {
+        id: '---',
+        model
+      }
+
+      const container = document.querySelector('#scene')
+      const viewer = document.createElement('ox-board-viewer')
+      viewer.board = board
+      viewer.provider = provider
+
+      container.appendChild(viewer)
+    </script>
+  </body>
+</html>

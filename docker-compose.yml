@@ -6,12 +6,12 @@ services:
     container_name: operato-wcs-backend
     image: operato-wcs-ai:latest
     ports:
-      - "8080:8080"
+      - "9190:9190"
     environment:
       # Spring Boot configuration
       - SPRING_PROFILES_ACTIVE=prod
-      # Server port (default 8080, dev profile uses 9500)
-      - SERVER_PORT=8080
+      # Server port (9190 for both dev and prod)
+      - SERVER_PORT=9190
       # Database connection (adjust as needed)
       # - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/wcs
       # - SPRING_DATASOURCE_USERNAME=wcs_user

@@ -1,0 +1,19 @@
+import { Query, {{pascalCase name}} } from './{{name}}-query'
+
+import { update{{pascalCase name}} } from './update-{{name}}'
+import { updateMultiple{{pascalCase name}} } from './update-multiple-{{name}}'
+import { create{{pascalCase name}} } from './create-{{name}}'
+import { delete{{pascalCase name}} } from './delete-{{name}}'
+import { delete{{pluralPascalCase name}} } from './delete-{{name}}s'
+
+export const {{pascalCase name}}Resolver = {
+  {{pascalCase name}},
+  Query,
+  Mutation: {
+    ...update{{pascalCase name}},
+    ...updateMultiple{{pascalCase name}},
+    ...create{{pascalCase name}},
+    ...delete{{pascalCase name}},
+    ...delete{{pluralPascalCase name}}
+  }
+}
