@@ -130,21 +130,39 @@ module.exports = {
 
 ### 실행 명령어
 
+#### 방법 1: Gradle 통합 빌드 (권장)
+
 ```bash
-# 1. 프론트엔드 빌드
+# 프론트엔드 + 백엔드 전체 빌드
+./gradlew buildAll
+
+# 운영 서버에서 백엔드 실행
+java -jar -Dspring.profiles.active=prod build/libs/operato-wcs-ai.jar
+
+# Nginx 설정 및 실행 (별도)
+# - dist-client 디렉토리를 Nginx 루트로 설정
+# - API 프록시 설정
+```
+
+#### 방법 2: 개별 빌드
+
+```bash
+# 1. 프론트엔드 빌드 (Gradle 사용)
+./gradlew lernaBootstrap buildFrontend
+
+# 또는 Yarn으로 직접 빌드
 cd frontend
 yarn build:client
 cd ..
 
-# 2. 백엔드 빌드
+# 2. 백엔드만 빌드 (프론트엔드 스킵)
+SKIP_FRONTEND=true ./gradlew build
+
+# 또는
 ./gradlew bootJar
 
 # 3. 운영 서버에서 백엔드 실행
 java -jar -Dspring.profiles.active=prod build/libs/operato-wcs-ai.jar
-
-# 4. Nginx 설정 및 실행 (별도)
-# - dist-client 디렉토리를 Nginx 루트로 설정
-# - API 프록시 설정
 ```
 
 ### Nginx 역할
@@ -179,28 +197,45 @@ java -jar -Dspring.profiles.active=prod build/libs/operato-wcs-ai.jar
 
 ### 배포 전 준비사항
 
-#### 1. 프론트엔드 빌드
+#### 방법 1: Gradle 통합 빌드 (권장)
 
 ```bash
+# 프론트엔드 + 백엔드 한 번에 빌드
+./gradlew clean buildAll -x test
+```
+
+빌드 결과물:
+- 프론트엔드: `frontend/packages/operato-wcs-ui/dist-client/`
+- 백엔드: `build/libs/operato-wcs-ai.jar`
+
+#### 방법 2: 개별 빌드
+
+**프론트엔드 빌드**:
+
+```bash
+# Gradle 사용
+./gradlew lernaBootstrap buildFrontend
+
+# 또는 Yarn으로 직접 빌드
 cd frontend
-
-# 의존성 설치 (처음 한 번만)
-yarn install
-
-# 프론트엔드 빌드
+yarn install  # 처음 한 번만
 yarn build:client
+cd ..
 ```
 
-빌드 결과물 위치: `frontend/packages/operato-wcs-ui/dist-client/`
+빌드 결과물: `frontend/packages/operato-wcs-ui/dist-client/`
 
-#### 2. 백엔드 빌드
+**백엔드 빌드** (프론트엔드 스킵):
 
 ```bash
-# 프로젝트 루트에서
-./gradlew clean build -x test
+# 환경 변수로 프론트엔드 스킵
+SKIP_FRONTEND=true ./gradlew clean build -x test
+
+# 또는 bootJar 사용 (더 빠름)
+./gradlew clean bootJar -x test
 ```
 
-빌드 결과물 위치: `build/libs/operato-wcs-ai.jar`
+빌드 결과물: `build/libs/operato-wcs-ai.jar`
 
 #### 3. 필수 파일 확인
 
@@ -340,9 +375,11 @@ docker-compose -f docker-compose.prod.yml down -v
 
 ```bash
 # 1. 프론트엔드 재빌드
-cd frontend
-yarn build:client
-cd ..
+# Gradle 사용 (권장)
+./gradlew lernaBootstrap buildFrontend
+
+# 또는 Yarn 직접 사용
+cd frontend && yarn build:client && cd ..
 
 # 2. Nginx 컨테이너 재시작 (빌드 결과물 볼륨 마운트 갱신)
 docker-compose -f docker-compose.prod.yml restart wcs-frontend
@@ -354,8 +391,11 @@ docker-compose -f docker-compose.prod.yml up -d wcs-frontend
 #### 백엔드 업데이트
 
 ```bash
-# 1. 백엔드 재빌드
-./gradlew clean build -x test
+# 1. 백엔드 재빌드 (프론트엔드 스킵)
+SKIP_FRONTEND=true ./gradlew clean build -x test
+
+# 또는 bootJar 사용
+./gradlew clean bootJar -x test
 
 # 2. 백엔드 이미지 재빌드 및 컨테이너 재시작
 docker-compose -f docker-compose.prod.yml up -d --build wcs-backend

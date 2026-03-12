@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig-base.json",
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "module": "esnext",
+    "outDir": "../dist-client",
+    "baseUrl": "./",
+    "allowJs": true,
+    "checkJs": false
+  },
+  "include": ["./**/*"]
+}

@@ -36,30 +36,21 @@ if [ ! -d "frontend" ]; then
     exit 1
 fi
 
-cd frontend
-
-# 의존성 설치 확인
-if [ ! -d "node_modules" ]; then
-    log_warn "node_modules가 없습니다. yarn install을 실행합니다..."
-    yarn install
-fi
-
-# 프론트엔드 빌드
-log_info "프론트엔드 클라이언트 빌드 중..."
-yarn build:client
+# Gradle 통합 빌드 사용 (lernaBootstrap + buildFrontend)
+log_info "프론트엔드 클라이언트 빌드 중... (Gradle 사용)"
+./gradlew lernaBootstrap buildFrontend
 
 # 빌드 결과 확인
-if [ ! -d "packages/operato-wcs-ui/dist-client" ]; then
+if [ ! -d "frontend/packages/operato-wcs-ui/dist-client" ]; then
     log_error "프론트엔드 빌드 실패: dist-client 디렉토리가 생성되지 않았습니다."
     exit 1
 fi
 
 log_info "프론트엔드 빌드 완료 ✓"
-cd ..
 
-# Step 2: 백엔드 빌드
+# Step 2: 백엔드 빌드 (프론트엔드 스킵)
 log_info "Step 2/5: 백엔드 빌드 중..."
-./gradlew clean build -x test
+SKIP_FRONTEND=true ./gradlew clean build -x test
 
 # JAR 파일 확인
 if [ ! -f "build/libs/operato-wcs-ai.jar" ]; then

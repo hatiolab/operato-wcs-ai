@@ -103,6 +103,10 @@ docker run -d \
 **단점:**
 - 사전에 로컬 빌드 필요 (`/deploy-backend` 스킬 사용)
 
+**참고:**
+- 백엔드만 빌드 시 `SKIP_FRONTEND=true` 옵션 사용
+- Docker 배포 시 프론트엔드는 Nginx에서 별도 서빙
+
 ### 4. 빌드 전 정리 (--clean 옵션)
 
 ```bash
@@ -311,8 +315,9 @@ open -a Docker
 ### 개발 환경
 
 ```bash
-# 1. 백엔드 빌드
+# 1. 백엔드 빌드 (프론트엔드 제외)
 /deploy-backend
+# 또는 직접: SKIP_FRONTEND=true ./gradlew clean build -x test
 
 # 2. Docker 이미지 빌드 및 실행 (빠른 방법)
 /docker-backend --simple

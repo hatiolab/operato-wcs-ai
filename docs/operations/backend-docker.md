@@ -38,8 +38,11 @@ docker run -d \
 로컬에서 JAR를 먼저 빌드한 후 Docker 이미지를 생성합니다.
 
 ```bash
-# 1. 로컬에서 JAR 빌드
-./gradlew clean build -x test
+# 1. 로컬에서 JAR 빌드 (프론트엔드 제외)
+SKIP_FRONTEND=true ./gradlew clean build -x test
+
+# 또는 bootJar 사용 (더 빠름)
+./gradlew clean bootJar -x test
 
 # 2. 간단한 Dockerfile로 이미지 빌드
 docker build -f Dockerfile.simple -t operato-wcs-ai:latest .
@@ -55,9 +58,14 @@ docker run -d \
 **장점:**
 - 빌드 시간이 빠름 (약 10-20초)
 - 로컬 개발 환경과 동일한 JAR 사용
+- 프론트엔드 빌드 생략으로 빌드 시간 단축
 
 **단점:**
-- 로컬에 Java 18 및 Gradle 필요
+- 로컬에 Java 17 및 Gradle 필요
+
+**참고:**
+- `SKIP_FRONTEND=true` 옵션으로 프론트엔드 빌드를 건너뜁니다
+- Docker 배포 시 프론트엔드는 별도 Nginx 컨테이너에서 서빙됩니다
 
 ## Docker Compose 사용
 

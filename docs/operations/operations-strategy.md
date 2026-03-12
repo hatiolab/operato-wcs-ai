@@ -171,8 +171,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build JAR
-        run: ./gradlew clean build -x test
+      - name: Build JAR (프론트엔드 스킵)
+        run: SKIP_FRONTEND=true ./gradlew clean build -x test
 
       - name: Build Docker image
         run: docker build -t operato-wcs:${{ github.ref_name }} .

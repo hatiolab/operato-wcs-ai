@@ -14,8 +14,9 @@ COPY settings.gradle .
 # Copy source code
 COPY src src
 
-# Build application (skip tests for faster build)
-RUN ./gradlew clean build -x test --no-daemon
+# Build application (skip tests and frontend for faster build)
+# Frontend is served by Nginx in docker-compose.prod.yml
+RUN SKIP_FRONTEND=true ./gradlew clean build -x test --no-daemon
 
 # Stage 2: Runtime
 FROM eclipse-temurin:17-jre
