@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_things_factory_operato_wcs_ui=self.webpackChunk_things_factory_operato_wcs_ui||[]).push([[4195],{74195:(t,e,o)=>{o.r(e),o.d(e,{default:()=>s});var r={operatoLogis:{baseUrl:null}};const s=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:r,e=arguments.length>1?arguments[1]:void 0;return e.type,t}}}]);

@@ -1,1 +1,0 @@
-# Operato Logis Manager
