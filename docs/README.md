@@ -20,6 +20,7 @@ docs/
 │   └── messaging-specification.md               # RabbitMQ 메시지 인터페이스 명세 (WCS↔ECS)
 │
 ├── implementation/
+│   ├── dev-environment-setup.md                 # 개발 환경 구성 가이드
 │   ├── backend-coding-conventions.md            # 백엔드 Java 코딩 컨벤션
 │   ├── frontend-coding-conventions.md           # 프론트엔드 Lit/TypeScript 코딩 컨벤션
 │   └── api/                                     # 모듈별 API 명세
@@ -48,14 +49,12 @@ docs/
 │   │   ├── code-quality-report.md               # 백엔드 코드 품질 분석 보고서
 │   │   ├── improvement-checklist.md             # 백엔드 개선 항목 체크리스트
 │   │   ├── security-improvements.md             # 백엔드 보안 개선 사항
-│   │   └── testing-guide.md                     # 백엔드 테스트 가이드
+│   │   ├── testing-guide.md                     # 백엔드 테스트 가이드
+│   │   └── backend-refactoring-plan.md          # 백엔드 리팩토링 계획
 │   └── frontend/                                # 프론트엔드 품질 문서
 │       ├── code-quality-report.md               # 프론트엔드 코드 품질 분석 보고서
 │       ├── improvement-checklist.md             # 프론트엔드 개선 항목 체크리스트
 │       └── testing-guide.md                     # 프론트엔드 테스트 가이드
-│
-├── refactoring/
-│   └── backend-refactoring-plan.md              # 백엔드 리팩토링 계획
 │
 ├── requirements/
 │   ├── wcs-feature-definition.md                # WCS 핵심 기능 정의서

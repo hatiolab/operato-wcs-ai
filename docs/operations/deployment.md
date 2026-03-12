@@ -436,7 +436,7 @@ docker stats --no-stream
 ```yaml
 wcs-frontend:
   ports:
-    - "8080:80"  # 외부 포트를 8080으로 변경
+    - "5908:80"  # 외부 포트를 5908으로 변경
 ```
 
 #### HTTPS 활성화
