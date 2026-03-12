@@ -17,10 +17,13 @@
     "directory": "packages/metapage"
   },
   "scripts": {
-    "build": "tsc --p tsconfig.json",
-    "build:server": "npm run clean:server && tsc",
-    "clean:server": "rm -rf dist-server",
-    "clean": "npm run clean:server",
+    "build": "npm run build:server && npm run build:client",
+    "copy:files": "copyfiles -e \"./client/**/*.{ts,js,json}\" -u 1 \"./client/**/*\" dist-client",
+    "build:client": "npm run copy:files && npx tsc --p ./client/tsconfig.json",
+    "build:server": "npx tsc --p ./server/tsconfig.json",
+    "clean:client": "npx rimraf dist-client",
+    "clean:server": "npx rimraf dist-server",
+    "clean": "npm run clean:server && npm run clean:client",
     "migration:create": "node ../../node_modules/typeorm/cli.js migration:create -d ./server/migrations"
   },
   "dependencies": {
