@@ -35,6 +35,9 @@ logs/
 frontend/node_modules/
 frontend/packages/*/node_modules/
 frontend/packages/*/dist/
+frontend/packages/*/dist-client/
+frontend/packages/*/dist-server/
+frontend/packages/*/dist-app/
 frontend/packages/*/.vite/
 frontend/yarn.lock
 
