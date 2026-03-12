@@ -124,12 +124,109 @@
 
 ---
 
+## 2026-03-11
+
+### 프론트엔드 구성 완료 (Things Factory 모노레포)
+
+- **상태**: 완료
+- **내용**: Things Factory 기반 Lerna 모노레포 구조로 프론트엔드 구성
+- **구성 상세**:
+  - 프레임워크: Things Factory (Lit 기반 Web Components)
+  - 구조: Lerna 모노레포
+  - 패키지:
+    - `operato-wcs-ui` — 메인 WCS UI (포트 5908)
+    - `operato-wcs-system-ui` — 시스템 UI
+    - `metapage` — 메타페이지
+    - `operatofill` — Spring 백엔드 연동
+- **개발 서버**: `yarn wcs:dev` (포트 5908)
+- **빌드**: `yarn build:client` → `dist-client/`
+- **변경 파일**:
+  - `frontend/` — 전체 디렉토리 구조 (Things Factory 소스)
+  - `docs/architecture/frontend-structure.md` — 신규 생성, 프론트엔드 구조 및 빌드 가이드
+  - `docs/checklist/dev-start-checklist.md` — 프론트엔드 섹션 완료 반영
+
+### 백엔드 포트 통일 (8080 → 9190)
+
+- **상태**: 완료
+- **내용**: 운영 환경 백엔드 포트를 8080에서 9190으로 변경하여 개발/운영 환경 포트 통일
+- **사유**: 개발 환경이 이미 9190 사용 중, 운영 환경도 동일 포트로 통일하여 설정 일관성 확보
+- **변경 범위**:
+  - Docker 설정 파일: `Dockerfile`, `Dockerfile.simple`, `docker-compose.yml`, `docker-compose.prod.yml`
+  - 문서: `CLAUDE.md`, `docs/operations/deployment.md`, `docs/operations/backend-docker.md`, `docs/architecture/backend-architecture.md`, `docs/operations/smb-infrastructure-proposal.md`
+  - 스킬: `.claude/skills/README.md`, `.claude/skills/run-backend/SKILL.md`, `.claude/skills/stop-backend/SKILL.md`, `.claude/skills/docker-backend/SKILL.md`
+- **변경 파일**: 총 13개 파일의 23개 위치
+
+### Nginx 운영 배포 환경 구성
+
+- **상태**: 완료
+- **내용**: 프론트엔드 운영 배포를 위한 Nginx + Docker 환경 구성
+- **구성 상세**:
+  - Nginx 설정: 정적 파일 서빙, API 프록시, 캐싱, 보안 헤더
+  - Docker Compose: 백엔드(내부 9190) + Nginx(외부 80/443) 통합
+  - 자동 배포 스크립트: 빌드 → Docker 배포 → 헬스 체크
+- **변경 파일**:
+  - `docker/nginx/nginx.conf` — 신규 생성, Nginx 웹 서버 설정
+  - `docker-compose.prod.yml` — 신규 생성, 운영 환경 컨테이너 오케스트레이션
+  - `scripts/deploy-prod.sh` — 신규 생성, 자동 배포 스크립트
+  - `.dockerignore` — 프론트엔드 node_modules 제외 규칙 추가
+
+### 배포 문서 통합 및 개선
+
+- **상태**: 완료
+- **내용**: `deployment.md`와 `frontend-deployment.md`를 단일 문서로 통합
+- **개선 사항**:
+  - 개발 환경: 백엔드(9190) / 프론트엔드(5908) 별도 실행으로 명확화
+  - 운영 환경 옵션 1: JAR + Nginx 직접 실행 (상세 가이드)
+  - 운영 환경 옵션 2: Docker 배포 (docker-compose.prod.yml 사용)
+- **변경 파일**:
+  - `docs/operations/deployment.md` — 완전히 재작성 (650+ 줄 종합 가이드)
+  - `docs/operations/frontend-deployment.md` — 삭제 (deployment.md로 통합)
+  - `docs/architecture/architecture.md` — 관련 문서에 프론트엔드 아키텍처 추가
+
+### 체크리스트 현행화
+
+- **상태**: 완료
+- **내용**: `dev-start-checklist.md`를 최신 상태로 업데이트
+- **업데이트 항목**:
+  - 버전: 1.1 → 1.2
+  - 최종 수정일: 2026-03-05 → 2026-03-11
+  - 프론트엔드 구성 방향 결정: 미완료 → 완료로 체크
+  - 프론트엔드 섹션: 플레이스홀더 → Things Factory 상세 구성 내용으로 대체
+  - 현재 프로젝트 상태: Nginx 배포 환경, 포트 통일, 프론트엔드 구성 완료 추가
+  - 변경 이력: 버전 1.2 항목 추가
+- **변경 파일**:
+  - `docs/checklist/dev-start-checklist.md`
+  - `docs/checklist/dev-start-checklist-log.md` — 본 문서
+
+### 코딩 컨벤션 백엔드/프론트엔드 분리
+
+- **상태**: 완료
+- **내용**: 단일 코딩 컨벤션 문서를 백엔드/프론트엔드로 분리
+- **변경 사항**:
+  - `coding-conventions.md` → `backend-coding-conventions.md`로 이름 변경
+  - `frontend-coding-conventions.md` 신규 생성 (Things Factory/Lit 기반)
+- **프론트엔드 컨벤션 주요 내용**:
+  - Lit 컴포넌트 작성 규칙 (스타일 → 프로퍼티 → 상태 → 메서드 → render 순서)
+  - 파일 네이밍: kebab-case (`gateway-page.js`)
+  - TypeScript 타입 정의 및 사용 규칙
+  - API 연동 패턴 (ApiClient)
+  - 이벤트 처리 및 상태 관리
+  - 성능 최적화 (shouldUpdate, repeat 디렉티브)
+  - 접근성(A11y) 규칙
+- **변경 파일**:
+  - `docs/implementation/coding-conventions.md` → `backend-coding-conventions.md` (이름 변경)
+  - `docs/implementation/frontend-coding-conventions.md` — 신규 생성
+  - `docs/README.md` — 문서 구조 업데이트
+  - `docs/checklist/dev-start-checklist.md` — 코딩 컨벤션 항목 완료로 체크, 미완료 항목 업데이트
+  - `docs/checklist/dev-start-checklist-log.md` — 미완료 항목 설명 업데이트
+
+---
+
 ## 미완료 항목
 
 | 항목 | 우선순위 | 비고 |
 |------|----------|------|
-| 프론트엔드 구성 방향 결정 | 권장 | Lit 프로젝트 초기화 시점 결정 필요 |
-| 코딩 컨벤션 문서 작성 | 권장 | `docs/implementation/coding-conventions.md` 보완 |
-| API 문서 작성 | 향후 | `docs/api/` 디렉토리 |
-| 데이터베이스 ERD 및 스키마 문서 | 향후 | `docs/database/` 디렉토리 |
+| 코딩 컨벤션 문서 보완 | 권장 | 백엔드/프론트엔드 분리 완료, 세부 내용 보완 필요 |
+| API 명세 문서 작성 | 향후 | `docs/design/` 디렉토리 |
+| 데이터베이스 ERD 및 스키마 문서 | 향후 | `docs/design/` 디렉토리 |
 | UI/UX 설계 문서 | 향후 | `docs/design/` 디렉토리 |

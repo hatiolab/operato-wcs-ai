@@ -45,4 +45,5 @@ Operato WCS는 HatioLab의 물류 운영 플랫폼 중 **현장 제어(Execution
 |------|------|
 | 시스템 아키텍처 | [architecture.md](../architecture/architecture.md) |
 | 백엔드 아키텍처 | [backend-architecture.md](../architecture/backend-architecture.md) |
+| 프론트엔드 아키텍처 | [frontend-architecture.md](../architecture/frontend-architecture.md) |
 | WCS 기능 정의 | [wcs-feature-definition.md](../requirements/wcs-feature-definition.md) |

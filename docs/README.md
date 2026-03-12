@@ -20,7 +20,8 @@ docs/
 │   └── messaging-specification.md               # RabbitMQ 메시지 인터페이스 명세 (WCS↔ECS)
 │
 ├── implementation/
-│   ├── coding-conventions.md                    # Java·프론트엔드 코딩 컨벤션
+│   ├── backend-coding-conventions.md            # 백엔드 Java 코딩 컨벤션
+│   ├── frontend-coding-conventions.md           # 프론트엔드 Lit/TypeScript 코딩 컨벤션
 │   └── api/                                     # 모듈별 API 명세
 │       ├── base-api.md                          # Base 모듈 API 목록
 │       ├── bms-api.md                           # BMS 모듈 API 목록
@@ -41,12 +42,17 @@ docs/
 │   └── wbs.md                                   # WBS (Work Breakdown Structure)
 │
 ├── quality/
-│   ├── README.md                                # 품질 문서 개요
-│   ├── summary.md                               # 품질 분석 요약
-│   ├── code-quality-report.md                   # 코드 품질 분석 보고서
-│   ├── improvement-checklist.md                 # 개선 항목 체크리스트
-│   ├── security-improvements.md                 # 보안 개선 사항
-│   └── testing-guide.md                         # 테스트 가이드
+│   ├── backend/                                 # 백엔드 품질 문서
+│   │   ├── README.md                            # 백엔드 품질 문서 개요
+│   │   ├── summary.md                           # 백엔드 품질 분석 요약
+│   │   ├── code-quality-report.md               # 백엔드 코드 품질 분석 보고서
+│   │   ├── improvement-checklist.md             # 백엔드 개선 항목 체크리스트
+│   │   ├── security-improvements.md             # 백엔드 보안 개선 사항
+│   │   └── testing-guide.md                     # 백엔드 테스트 가이드
+│   └── frontend/                                # 프론트엔드 품질 문서
+│       ├── code-quality-report.md               # 프론트엔드 코드 품질 분석 보고서
+│       ├── improvement-checklist.md             # 프론트엔드 개선 항목 체크리스트
+│       └── testing-guide.md                     # 프론트엔드 테스트 가이드
 │
 ├── refactoring/
 │   └── backend-refactoring-plan.md              # 백엔드 리팩토링 계획
